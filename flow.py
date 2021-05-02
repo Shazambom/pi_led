@@ -6,7 +6,7 @@ import random
 
 
 num_lights = 50
-num_colors = 256
+num_colors = 50
 
 pixels = neopixel.NeoPixel(board.D18, num_lights)
 
