@@ -1,5 +1,6 @@
 import board
 import neopixel
+import time
 
 
 num_lights = 50
@@ -18,4 +19,4 @@ for r in range(255, -1, -1):
 for color in colors:
 	pixels.fill(color)
 	pixels.show()
-	sleep(0.1)
+	# sleep(0.1)
