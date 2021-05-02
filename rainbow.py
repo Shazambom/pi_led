@@ -28,5 +28,5 @@ for i in range(0, 10000):
 	pixels.show()
 	color = NextColor(color)
 	print(color)
-	time.sleep(0.1)
+	time.sleep(0.5)
 
