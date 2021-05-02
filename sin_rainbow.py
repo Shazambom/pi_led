@@ -8,10 +8,6 @@ num_lights = 50
 
 pixels = neopixel.NeoPixel(board.D18, num_lights)
 
-#I need all combinations of R,G,B and I need to iterate over all of them
-#I need colors from ROYGBIV but I want it to transition in between these colors seamlessly so 
-#I want a function I can imput the current value and it know how to step to the next color
-
 
 def NextColor(color):
 	cin = np.true_divide(np.array(color), 255) * 360
