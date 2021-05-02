@@ -10,9 +10,12 @@ num_colors = 256
 
 pixels = neopixel.NeoPixel(board.D18, num_lights)
 
-#I need all combinations of R,G,B and I need to iterate over all of them
-#I need colors from ROYGBIV but I want it to transition in between these colors seamlessly so 
-#I want a function I can imput the current value and it know how to step to the next color
+colors = []
+
+def SetColors(buff, pixels):
+	for i in range(len(pixels)):
+		pixels[i] = buff[i]
+	pixels.show()
 
 
 def NextColor(color):
@@ -24,10 +27,16 @@ def NextColor(color):
 	r,g,b = colorsys.hsv_to_rgb(h, 1, 1)
 	return (r * 255, g * 255, b * 255)
 
-color = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
+start = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
+colors.append(start)
+
+for i in range(1, num_lights):
+	colors.append(NextColor(colors[i - 1]))
+
+
 for i in range(10000):
-	pixels.fill(color)
-	pixels.show()
-	color = NextColor(color)
+	color = NextColor(colors[-1])
+	colors = colors[:-1].insert(0, color)
+	SetColors(colors)
 	time.sleep(0.05)
 

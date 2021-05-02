@@ -21,7 +21,7 @@ def NextColor(color):
 
 
 color = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
-for i in range(0, 10000):
+for i in range(10000):
 	pixels.fill(color)
 	pixels.show()
 	color = NextColor(color)
