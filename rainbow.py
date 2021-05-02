@@ -18,10 +18,8 @@ def NextColor(color):
 	print("Angle IN: " + str(cin))
 	rad = np.absolute(np.sin(cin * np.pi / 180.))
 	print("Radians out: " + str(rad))
-	ang = rad / np.pi
-	print("% Of angle: " + str(ang))
 	
-	return (ang[0] * 255, ang[1] * 255, ang[2] * 255)
+	return (rad[0] * 255, rad[1] * 255, rad[2] * 255)
 
 
 color = (255, 127, 63)
