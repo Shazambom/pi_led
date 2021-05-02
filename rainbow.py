@@ -15,11 +15,11 @@ pixels = neopixel.NeoPixel(board.D18, num_lights)
 
 def NextColor(color):
 	cin = np.true_divide(np.array(color), 255)
-	r = np.sin(cin[0] * np.pi / 180.) * 255
-	g = np.sin(cin[1] * np.pi / 90.) * 255
-	b = np.sin(cin[2] * np.pi / 270.) * 255
-	print("R: " + str(r) + " G: " + str(g) + " B: " + str(b))
-	return (r, g, b)
+	r = np.sin(cin[0] * np.pi / 2.)
+	g = np.sin(cin[1] * np.pi / 2.) 
+	b = np.sin(cin[2] * np.pi / 2.) 
+	print("R: " + str(r * 255) + " G: " + str(g * 255) + " B: " + str(b * 255))
+	return (r * 255, g * 255, b * 255)
 
 
 color = (255, 127, 63)
