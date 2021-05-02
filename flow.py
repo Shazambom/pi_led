@@ -37,6 +37,6 @@ for i in range(1, num_lights):
 for i in range(10000):
 	color = NextColor(colors[-1])
 	colors = colors[:-1].insert(0, color)
-	SetColors(colors)
+	SetColors(colors, pixels)
 	time.sleep(0.05)
 
