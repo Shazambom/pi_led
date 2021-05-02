@@ -11,7 +11,8 @@ pixels[0] = (255, 0, 0)
 
 pixels[1] = (0, 0, 255)
 
-print(pixels)
+object_methods = [method_name for method_name in dir(pixels) if callable(getattr(pixels, method_name))]
+print(object_methods)
 
 pixels.fill((255, 0, 0))
 
