@@ -10,7 +10,6 @@ num_colors = 256
 
 pixels = neopixel.NeoPixel(board.D18, num_lights)
 
-colors = []
 
 def SetColors(buff, pixels):
 	for i in range(len(pixels)):
@@ -27,6 +26,8 @@ def NextColor(color):
 	r,g,b = colorsys.hsv_to_rgb(h, 1, 1)
 	return (r * 255, g * 255, b * 255)
 
+
+colors = []
 start = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
 colors.append(start)
 
@@ -36,7 +37,8 @@ for i in range(1, num_lights):
 
 for i in range(10000):
 	color = NextColor(colors[-1])
-	colors = colors[:-1].insert(0, color)
+	colors = colors[:-1]
+	colors.insert(0, color)
 	SetColors(colors, pixels)
 	time.sleep(0.05)
 
