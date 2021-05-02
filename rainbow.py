@@ -14,25 +14,17 @@ pixels = neopixel.NeoPixel(board.D18, num_lights)
 
 
 def NextColor(color):
-	out = np.sin(np.array(color) * np.pi / 180.)
-	out = np.absolute(out)
-	return (out[0] * 255, out[1] * 255, out[2] * 255)
+	cin = np.true_divide(np.array(color), 255)
+	r = np.sin(cin[0] * np.pi / 180.)[0] * 255
+	g = np.sin(cin[1] * np.pi / 90.)[0] * 255
+	b = np.sin(cin[2] * np.pi / 270.)[0] * 255
+	return (r, g, b)
 
-color_table = []
 
-c = (255, 0, 100)
+color = (255, 127, 63)
 for i in range(0, 10000):
-	color_table.append(c)
-	c = NextColor(c)
-	print(c)
-
-
-for color in color_table:
 	pixels.fill(color)
 	pixels.show()
-
-# for i in range(0, 10000):
-# 	pixels.fill(color)
-# 	pixels.show()
-# 	color = NextColor(color)
+	color = NextColor(color)
+	sleep(0.1)
 
