@@ -26,6 +26,10 @@ def NextColor(color):
 	r,g,b = colorsys.hsv_to_rgb(h, 1, 1)
 	return (r * 255, g * 255, b * 255)
 
+def NextColors(colors):
+	for i in range(len(colors)):
+		colors[i] = NextColor(colors[i])
+
 colors = []
 start = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
 colors.append(start)
@@ -35,8 +39,7 @@ for i in range(1, num_lights):
 
 
 for i in range(10000):
-	color = NextColor(colors[-1])
-	colors = colors[1:]
-	colors.append(color)
+	NextColors(colors)
 	SetColors(colors, pixels)
+
 
