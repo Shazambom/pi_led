@@ -21,7 +21,8 @@ def NextColor(color):
 	b = color[2] / 255
 	h, s, v = colorsys.rgb_to_hsv(r, g, b)
 	h += 0.9/num_colors
-	return colorsys.hsv_to_rgb(h, 1, 1)
+	r,g,b = colorsys.hsv_to_rgb(h, 1, 1)
+	return (r * 255, g * 255, b * 255)
 
 color = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
 for i in range(0, 10000):
