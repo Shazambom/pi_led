@@ -15,12 +15,24 @@ pixels = neopixel.NeoPixel(board.D18, num_lights)
 
 def NextColor(color):
 	out = np.sin(np.array(color) * np.pi / 180.)
+
 	return (out[0], out[1], out[2])
 
+color_table = []
 
-color = (255, 0, 100)
+c = (255, 0, 100)
 for i in range(0, 10000):
+	color_table.append(c)
+	c = NextColor(c)
+	print(c)
+
+
+for color in color_table:
 	pixels.fill(color)
 	pixels.show()
-	color = NextColor(color)
+
+# for i in range(0, 10000):
+# 	pixels.fill(color)
+# 	pixels.show()
+# 	color = NextColor(color)
 
