@@ -29,5 +29,3 @@ for i in range(0, 10000):
 	pixels.fill(color)
 	pixels.show()
 	color = NextColor(color)
-	time.sleep(0.1)
-
