@@ -3,6 +3,7 @@ import neopixel
 import time
 import colorsys
 import random
+import atexit
 
 
 num_lights = 50
@@ -10,7 +11,9 @@ num_colors = 500
 
 pixels = neopixel.NeoPixel(board.D18, num_lights)
 
-
+def on_exit():
+	pixels.deinit()
+atexit.register(on_exit)
 
 def NextColor(color):
 	r = color[0] / 255
@@ -26,4 +29,3 @@ for i in range(10000):
 	pixels.fill(color)
 	pixels.show()
 	color = NextColor(color)
-

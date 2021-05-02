@@ -3,10 +3,16 @@ import neopixel
 import time
 import numpy as np
 import random
+import atexit
+
 
 num_lights = 50
 
 pixels = neopixel.NeoPixel(board.D18, num_lights)
+
+def on_exit():
+	pixels.deinit()
+atexit.register(on_exit)
 
 
 def NextColor(color):
