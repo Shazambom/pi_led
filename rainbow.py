@@ -19,8 +19,8 @@ def NextColor(color):
 
 
 color = (255, 0, 100)
-while True:
+for i in range(0, 10000)
 	pixels.fill(color)
-	# pixels.show()
+	pixels.show()
 	color = NextColor(color)
 
