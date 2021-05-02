@@ -2,7 +2,7 @@ import board
 import neopixel
 import time
 import numpy as np
-import random
+
 
 num_lights = 50
 
@@ -20,7 +20,7 @@ def NextColor(color):
 	return (rad[0] * 255, rad[1] * 255, rad[2] * 255)
 
 
-color = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
+color = (255, 127, 63)
 for i in range(0, 10000):
 	pixels.fill(color)
 	pixels.show()
