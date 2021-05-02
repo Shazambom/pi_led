@@ -16,7 +16,10 @@ pixels = neopixel.NeoPixel(board.D18, num_lights)
 
 
 def NextColor(color):
-	h, s, v = colorsys.rgb_to_hsv(color)
+	r = color[0] / 255
+	g = color[1] / 255
+	b = color[2] / 255
+	h, s, v = colorsys.rgb_to_hsv(r, g, b)
 	h += 0.9/num_colors
 	return colorsys.hsv_to_rgb(h, 1, 1)
 
