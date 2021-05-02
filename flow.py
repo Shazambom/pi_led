@@ -6,7 +6,7 @@ import random
 
 
 num_lights = 50
-num_colors = 50
+num_colors = 25
 
 pixels = neopixel.NeoPixel(board.D18, num_lights)
 
@@ -40,5 +40,5 @@ for i in range(10000):
 	colors = colors[:-1]
 	colors.insert(0, color)
 	SetColors(colors, pixels)
-	time.sleep(0.05)
+	# time.sleep(0.05)
 
