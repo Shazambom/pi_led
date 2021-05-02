@@ -1,10 +1,12 @@
 import board
 import neopixel
 import time
-import numpy as np
+import colorsys
+import random
 
 
 num_lights = 50
+num_colors = 50
 
 pixels = neopixel.NeoPixel(board.D18, num_lights)
 
@@ -14,16 +16,14 @@ pixels = neopixel.NeoPixel(board.D18, num_lights)
 
 
 def NextColor(color):
-	cin = np.true_divide(np.array(color), 255) * 360
-	rad = np.absolute(np.sin(cin * np.pi / 180.))
-	
-	return (rad[0] * 255, rad[1] * 255, rad[2] * 255)
+	h, s, v = colorsys.rgb_to_hsv(color)
+	h += 0.9/num_colors
+	return colorsys.hsv_to_rgb(h, 1, 1)
 
-
-color = (255, 127, 63)
+color = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
 for i in range(0, 10000):
 	pixels.fill(color)
 	pixels.show()
 	color = NextColor(color)
-	time.sleep(0.5)
+	time.sleep(0.1)
 
