@@ -51,7 +51,7 @@ class Led:
 		return [i for sub in self.FlattenFrame(frame) for i in sub]
 
 
-	def EncodeFrames(self, frames):
+	def Encode(self, frames):
 		byte_arrs = []
 		frames = self.Flatten(self.Flatten(frames))
 		byte_arr = self.FrameToByteArr(frames)
@@ -59,17 +59,16 @@ class Led:
 		return zlib.compress(byte_arr)
 
 
-	def DecodeFrames(self, compressed):
+	def Decode(self, compressed):
 		frames = []
 		byte_arr = zlib.decompress(compressed)
 
-		for i in range(0, len(byte_arr), self.num_lights*3):
-			frames.append(self.ByteArrToFrame(byte_arr[i:i+(self.num_lights*3)]))
+		num_bytes_in_frame = self.num_lights*3
+
+		for i in range(0, len(byte_arr), num_bytes_in_frame):
+			frames.append(self.ByteArrToFrame(byte_arr[i:i+num_bytes_in_frame]))
 
 		return frames
-
-
-
 
 
 	def NextColor_Rainbow(self, color):
@@ -99,11 +98,12 @@ for num_frames in range(100):
 		frame.append(color)
 	test_frames.append(frame)
 
-eframes = tester.EncodeFrames(test_frames)
+eframes = tester.Encode(test_frames)
 print(eframes)
-dframes = tester.DecodeFrames(eframes)
+dframes = tester.Decode(eframes)
 print(dframes)
-
+print(len(dframes))
+print(len(dframes[0]))
 
 
 
