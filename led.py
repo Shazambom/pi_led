@@ -75,6 +75,19 @@ class Led:
 		r,g,b = colorsys.hsv_to_rgb(h, 1, 1)
 		return (int(r * 255), int(g * 255), int(b * 255))
 
+	def Generate_Rainbow(self, num_frames):
+		frames = []
+		color = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
+
+		for i in range(num_frames):
+			color = self.NextColor_Rainbow(color)
+			frame = []
+			for light in range(self.num_lights):
+				frame.append(color)
+			frames.append(frame)
+		return frames
+
+
 	def on_exit(self):
 		self.pixels.deinit()
 		print("I'm ending! Goodbye :D")
@@ -82,16 +95,7 @@ class Led:
 
 tester = Led(50, 50)
 
-test_frames = []
-
-color = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
-
-for num_frames in range(100):
-	color = tester.NextColor_Rainbow(color)
-	frame = []
-	for light in range(tester.num_lights):
-		frame.append(color)
-	test_frames.append(frame)
+test_frames = tester.Generate_Rainbow(500)
 
 eframes = tester.Encode(test_frames)
 print(eframes)
