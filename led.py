@@ -1,5 +1,5 @@
-# import board
-# import neopixel
+import board
+import neopixel
 import time
 import colorsys
 import random
