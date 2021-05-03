@@ -5,7 +5,7 @@ import colorsys
 import random
 import atexit
 import zlib
-
+import copy
 
 # Byte structure: based on the num_lights we need to create a list of lists frames = [[RGB values for num_ligts]]
 # RGB values will be encoded via chunks of 3 bytes
@@ -87,6 +87,22 @@ class Led:
 			frames.append(frame)
 		return frames
 
+	def Generate_Flow(self, num_frames):
+		frames = []
+		colors = []
+		start = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
+		colors.append(start)
+
+		for i in range(1, num_lights):
+			colors.append(NextColor(colors[i - 1]))
+
+
+		for frame in range(num_frames):
+			color = NextColor(colors[-1])
+			colors = colors[1:]
+			colors.append(color)
+			frames.append(copy.deepcopy(colors))
+		return frames
 
 	def on_exit(self):
 		self.pixels.deinit()
@@ -95,7 +111,7 @@ class Led:
 
 tester = Led(50, 50)
 
-test_frames = tester.Generate_Rainbow(500)
+test_frames = tester.Generate_Flow(500)
 
 eframes = tester.Encode(test_frames)
 print(eframes)
