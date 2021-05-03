@@ -26,7 +26,7 @@ class Led:
 			self.pixels.show()
 		return
 
-	def FrameToByteArr(self, frame):
+	def IntArrToByteArr(self, frame):
 		if max(frame) > 255:
 			return None
 		return bytearray(frame)
@@ -43,18 +43,14 @@ class Led:
 		return frame
 
 
-
-	def Flatten(self, frame):
-		return [i for sub in frame for i in sub]
-
-	def FlattenFrames(self, frames):
-		return [i for sub in self.FlattenFrame(frame) for i in sub]
+	def Flatten(self, arr):
+		return [i for sub in arr for i in sub]
 
 
 	def Encode(self, frames):
 		byte_arrs = []
 		frames = self.Flatten(self.Flatten(frames))
-		byte_arr = self.FrameToByteArr(frames)
+		byte_arr = self.IntArrToByteArr(frames)
 
 		return zlib.compress(byte_arr)
 
@@ -70,7 +66,6 @@ class Led:
 
 		return frames
 
-
 	def NextColor_Rainbow(self, color):
 		r = color[0] / 255
 		g = color[1] / 255
@@ -85,7 +80,7 @@ class Led:
 		print("I'm ending! Goodbye :D")
 
 
-tester = Led(50, 500)
+tester = Led(50, 50)
 
 test_frames = []
 
