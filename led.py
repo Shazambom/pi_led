@@ -19,12 +19,12 @@ class Led:
 		self.num_lights = num_lights
 		self.num_colors = num_colors
 
-	def Write(self, buff):
-		for i in range(self.num_lights):
-			self.pixels[i] = buff[i]
-		self.pixels.show()
+	def Write(self, frames):
+		for buff in frames:
+			for i in range(self.num_lights):
+				self.pixels[i] = buff[i]
+			self.pixels.show()
 		return
-
 
 	def FrameToByteArr(self, frame):
 		if max(frame) > 255:
