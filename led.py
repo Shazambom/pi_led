@@ -14,15 +14,15 @@ import zlib
 
 class Led:
 	def __init__(self, num_lights, num_colors):
-		# self.pixels = neopixel.NeoPixel(board.D18, num_lights)
+		self.pixels = neopixel.NeoPixel(board.D18, num_lights)
 		atexit.register(self.on_exit)
 		self.num_lights = num_lights
 		self.num_colors = num_colors
 
 	def Write(self, buff):
-		# for i in range(self.num_lights):
-		# 	self.pixels[i] = buff[i]
-		# self.pixels.show()
+		for i in range(self.num_lights):
+			self.pixels[i] = buff[i]
+		self.pixels.show()
 		return
 
 
@@ -81,7 +81,7 @@ class Led:
 		return (int(r * 255), int(g * 255), int(b * 255))
 
 	def on_exit(self):
-		# self.pixels.deinit()
+		self.pixels.deinit()
 		print("I'm ending! Goodbye :D")
 
 
@@ -104,6 +104,8 @@ dframes = tester.Decode(eframes)
 print(dframes)
 print(len(dframes))
 print(len(dframes[0]))
+
+tester.Write(dframes)
 
 
 
