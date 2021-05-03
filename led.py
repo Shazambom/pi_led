@@ -93,7 +93,7 @@ class Led:
 		start = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
 		colors.append(start)
 
-		for i in range(1, num_lights):
+		for i in range(1, self.num_lights):
 			colors.append(NextColor(colors[i - 1]))
 
 
