@@ -104,6 +104,34 @@ class Led:
 			frames.append(copy.deepcopy(colors))
 		return frames
 
+	def Generate_Dot(self, num_frames):
+		frames = []
+		buff = []
+		white = (255, 255, 255)
+		off = (0, 0, 0)
+
+		for i in range(self.num_lights):
+			colors = []
+			for j in range(self.num_lights):
+				if j == i:
+					colors.append(white)
+				else:
+					colors.append(off)
+			buff.append(colors)
+
+
+		forward = True
+		for i in range(num_frames):
+			if forward:
+				for colors in buff:
+					frames.append(colors)
+				forward = False
+			else:
+				for colors in reversed(buff):
+					frames.append(colors)
+				forward = True
+		return frames
+
 	def on_exit(self):
 		self.pixels.deinit()
 		print("I'm ending! Goodbye :D")
@@ -111,7 +139,7 @@ class Led:
 
 tester = Led(50, 50)
 
-test_frames = tester.Generate_Flow(500)
+test_frames = tester.Generate_Dot(500)
 
 eframes = tester.Encode(test_frames)
 print(eframes)
