@@ -144,7 +144,6 @@ test_frames = tester.Generate_Dot(500)
 eframes = tester.Encode(test_frames)
 print(eframes)
 dframes = tester.Decode(eframes)
-print(dframes)
 print(len(dframes))
 print(len(dframes[0]))
 
