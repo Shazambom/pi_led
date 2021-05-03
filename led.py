@@ -121,7 +121,7 @@ class Led:
 
 
 		forward = True
-		for i in range(num_frames/self.num_lights):
+		for i in range(int(num_frames/self.num_lights)):
 			if forward:
 				for colors in buff:
 					frames.append(colors)
