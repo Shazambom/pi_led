@@ -94,11 +94,11 @@ class Led:
 		colors.append(start)
 
 		for i in range(1, self.num_lights):
-			colors.append(self.NextColor(colors[i - 1]))
+			colors.append(self.NextColor_Rainbow(colors[i - 1]))
 
 
 		for frame in range(num_frames):
-			color = self.NextColor(colors[-1])
+			color = self.NextColor_Rainbow(colors[-1])
 			colors = colors[1:]
 			colors.append(color)
 			frames.append(copy.deepcopy(colors))
