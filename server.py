@@ -3,7 +3,7 @@ import time
 import atexit
 from led import Led
 
-HOST = "localhost"
+HOST = "0.0.0.0"
 PORT = 9000
 
 num_lights = 50
