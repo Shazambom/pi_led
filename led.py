@@ -20,7 +20,7 @@ class Led:
 		atexit.register(self.on_exit)
 		self.num_lights = num_lights
 		self.num_colors = num_colors
-		self.queue = queue.Queue(255)
+		self.queue = queue.Queue(maxsize=255)
 
 
 	def put(self, compressed):
@@ -165,7 +165,7 @@ print(len(dframes[0]))
 
 for i in range(0, 500):
 	tester.put(eframes)
-	
+
 t = threading.Thread(target=tester.play)
 t.start()
 
