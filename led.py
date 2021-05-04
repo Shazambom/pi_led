@@ -166,7 +166,7 @@ tester.play()
 
 for i in range(0, 500):
 	tester.put(eframes)
-while !tester.queue.empty():
+while not tester.queue.empty():
 	tester.play()
 
 
