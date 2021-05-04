@@ -7,6 +7,7 @@ import atexit
 import zlib
 import copy
 import queue
+import threading
 
 # Byte structure: based on the num_lights we need to create a list of lists frames = [[RGB values for num_ligts]]
 # RGB values will be encoded via chunks of 3 bytes
@@ -154,7 +155,7 @@ class Led:
 
 tester = Led(50, 250)
 
-test_frames = tester.generate_rainbow_frames(3)
+test_frames = tester.generate_rainbow_frames(100)
 
 eframes = tester.encode(test_frames)
 print(eframes)
@@ -162,12 +163,14 @@ dframes = tester.decode(eframes)
 print(len(dframes))
 print(len(dframes[0]))
 
-tester.play()
+
+t = threading.Thread(target=tester.play)
+t.start()
 
 for i in range(0, 500):
 	tester.put(eframes)
-while not tester.queue.empty():
-	tester.play()
+# while not tester.queue.empty():
+# 	tester.play()
 
 
 
