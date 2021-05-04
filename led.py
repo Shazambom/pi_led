@@ -159,7 +159,7 @@ class Led:
 
 tester = Led(50, 250)
 
-test_frames = tester.generate_rainbow_frames(100)
+test_frames = tester.generate_rainbow_frames(10)
 
 eframes = tester.encode(test_frames)
 print(eframes)
@@ -169,6 +169,9 @@ print(len(dframes[0]))
 
 tester.put(eframes)
 tester.run()
+
+for i in range(0, 100):
+	tester.put(eframes)
 
 
 # while not tester.queue.empty():
