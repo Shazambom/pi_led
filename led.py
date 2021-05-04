@@ -6,6 +6,7 @@ import random
 import atexit
 import zlib
 import copy
+import queue
 
 # Byte structure: based on the num_lights we need to create a list of lists frames = [[RGB values for num_ligts]]
 # RGB values will be encoded via chunks of 3 bytes
@@ -18,6 +19,20 @@ class Led:
 		atexit.register(self.on_exit)
 		self.num_lights = num_lights
 		self.num_colors = num_colors
+		self.queue = queue.Queue(255)
+
+
+	def put(self, compressed):
+		try:
+			self.queue.put(compressed)
+		except queue.Full:
+			print("Queue is full, try again another time!")
+
+	def play(self):
+		try:
+			self.write(self.decode(self.queue.get()))
+		except queue.Empty:
+			print("Queue is empty, please come back later")
 
 	def write(self, frames):
 		for buff in frames:
@@ -137,9 +152,9 @@ class Led:
 		print("I'm ending! Goodbye :D")
 
 
-tester = Led(50, 50)
+tester = Led(50, 250)
 
-test_frames = tester.generate_dot_frames(500)
+test_frames = tester.generate_rainbow_frames(500)
 
 eframes = tester.encode(test_frames)
 print(eframes)
@@ -147,7 +162,9 @@ dframes = tester.decode(eframes)
 print(len(dframes))
 print(len(dframes[0]))
 
-tester.write(dframes)
+tester.put(eframes)
+tester.play()
+
 
 
 
