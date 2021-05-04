@@ -163,12 +163,13 @@ dframes = tester.decode(eframes)
 print(len(dframes))
 print(len(dframes[0]))
 
-
+for i in range(0, 500):
+	tester.put(eframes)
+	
 t = threading.Thread(target=tester.play)
 t.start()
 
-for i in range(0, 500):
-	tester.put(eframes)
+
 # while not tester.queue.empty():
 # 	tester.play()
 
