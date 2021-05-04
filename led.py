@@ -24,17 +24,13 @@ class Led:
 
 
 	def put(self, compressed):
-		try:
-			self.queue.put(compressed)
-		except queue.Full:
-			print("Queue is full, try again another time!")
+		self.queue.put(compressed)
+
 
 	def pop_decode_write(self):
 		while True:
-			try:
-				self.write(self.decode(self.queue.get()))
-			except queue.Empty:
-				print("Queue is empty, please come back later")
+			self.write(self.decode(self.queue.get()))
+		
 
 	def run(self):
 		threading.Thread(target=self.pop_decode_write).start()
@@ -157,21 +153,21 @@ class Led:
 		print("I'm ending! Goodbye :D")
 
 
-tester = Led(50, 250)
+# tester = Led(50, 250)
 
-test_frames = tester.generate_rainbow_frames(10)
+# test_frames = tester.generate_rainbow_frames(10)
 
-eframes = tester.encode(test_frames)
-print(eframes)
-dframes = tester.decode(eframes)
-print(len(dframes))
-print(len(dframes[0]))
+# eframes = tester.encode(test_frames)
+# print(eframes)
+# dframes = tester.decode(eframes)
+# print(len(dframes))
+# print(len(dframes[0]))
 
-tester.put(eframes)
-tester.run()
+# tester.put(eframes)
+# tester.run()
 
-for i in range(0, 100):
-	tester.put(eframes)
+# for i in range(0, 100):
+# 	tester.put(eframes)
 
 
 # while not tester.queue.empty():
