@@ -19,19 +19,19 @@ class Led:
 		self.num_lights = num_lights
 		self.num_colors = num_colors
 
-	def Write(self, frames):
+	def write(self, frames):
 		for buff in frames:
 			for i in range(self.num_lights):
 				self.pixels[i] = buff[i]
 			self.pixels.show()
 		return
 
-	def IntArrToByteArr(self, frame):
+	def int_arr_to_byte_arr(self, frame):
 		if max(frame) > 255:
 			return None
 		return bytearray(frame)
 
-	def ByteArrToFrame(self, byte_arr):
+	def byte_arr_to_frame(self, byte_arr):
 		frame = []
 		for byte in range(0, len(byte_arr), 3):
 			r = byte_arr[byte]
@@ -43,30 +43,30 @@ class Led:
 		return frame
 
 
-	def Flatten(self, arr):
+	def flatten(self, arr):
 		return [i for sub in arr for i in sub]
 
 
-	def Encode(self, frames):
+	def encode(self, frames):
 		byte_arrs = []
-		frames = self.Flatten(self.Flatten(frames))
-		byte_arr = self.IntArrToByteArr(frames)
+		frames = self.flatten(self.flatten(frames))
+		byte_arr = self.int_arr_to_byte_arr(frames)
 
 		return zlib.compress(byte_arr)
 
 
-	def Decode(self, compressed):
+	def decode(self, compressed):
 		frames = []
 		byte_arr = zlib.decompress(compressed)
 
 		num_bytes_in_frame = self.num_lights*3
 
 		for i in range(0, len(byte_arr), num_bytes_in_frame):
-			frames.append(self.ByteArrToFrame(byte_arr[i:i+num_bytes_in_frame]))
+			frames.append(self.byte_arr_to_frame(byte_arr[i:i+num_bytes_in_frame]))
 
 		return frames
 
-	def NextColor_Rainbow(self, color):
+	def next_color_rainbow(self, color):
 		r = color[0] / 255
 		g = color[1] / 255
 		b = color[2] / 255
@@ -75,36 +75,36 @@ class Led:
 		r,g,b = colorsys.hsv_to_rgb(h, 1, 1)
 		return (int(r * 255), int(g * 255), int(b * 255))
 
-	def Generate_Rainbow(self, num_frames):
+	def generate_rainbow_frames(self, num_frames):
 		frames = []
 		color = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
 
 		for i in range(num_frames):
-			color = self.NextColor_Rainbow(color)
+			color = self.next_color_rainbow(color)
 			frame = []
 			for light in range(self.num_lights):
 				frame.append(color)
 			frames.append(frame)
 		return frames
 
-	def Generate_Flow(self, num_frames):
+	def generate_flow_frames(self, num_frames):
 		frames = []
 		colors = []
 		start = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
 		colors.append(start)
 
 		for i in range(1, self.num_lights):
-			colors.append(self.NextColor_Rainbow(colors[i - 1]))
+			colors.append(self.next_color_rainbow(colors[i - 1]))
 
 
 		for frame in range(num_frames):
-			color = self.NextColor_Rainbow(colors[-1])
+			color = self.next_color_rainbow(colors[-1])
 			colors = colors[1:]
 			colors.append(color)
 			frames.append(copy.deepcopy(colors))
 		return frames
 
-	def Generate_Dot(self, num_frames):
+	def generate_dot_frames(self, num_frames):
 		frames = []
 		buff = []
 		white = (255, 255, 255)
@@ -139,15 +139,15 @@ class Led:
 
 tester = Led(50, 50)
 
-test_frames = tester.Generate_Dot(500)
+test_frames = tester.generate_dot_frames(500)
 
-eframes = tester.Encode(test_frames)
+eframes = tester.encode(test_frames)
 print(eframes)
-dframes = tester.Decode(eframes)
+dframes = tester.decode(eframes)
 print(len(dframes))
 print(len(dframes[0]))
 
-tester.Write(dframes)
+tester.write(dframes)
 
 
 
