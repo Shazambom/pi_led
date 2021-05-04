@@ -20,7 +20,7 @@ class Led:
 		atexit.register(self.on_exit)
 		self.num_lights = num_lights
 		self.num_colors = num_colors
-		self.queue = queue.Queue(maxsize=255)
+		self.queue = queue.Queue()
 
 
 	def put(self, compressed):
@@ -29,11 +29,15 @@ class Led:
 		except queue.Full:
 			print("Queue is full, try again another time!")
 
-	def play(self):
-		try:
-			self.write(self.decode(self.queue.get()))
-		except queue.Empty:
-			print("Queue is empty, please come back later")
+	def pop_decode_write(self):
+		while True:
+			try:
+				self.write(self.decode(self.queue.get()))
+			except queue.Empty:
+				print("Queue is empty, please come back later")
+
+	def run(self):
+		threading.Thread(target=self.pop_decode_write).start()
 
 	def write(self, frames):
 		for buff in frames:
@@ -163,11 +167,8 @@ dframes = tester.decode(eframes)
 print(len(dframes))
 print(len(dframes[0]))
 
-for i in range(0, 500):
-	tester.put(eframes)
-
-t = threading.Thread(target=tester.play)
-t.start()
+tester.put(eframes)
+tester.run()
 
 
 # while not tester.queue.empty():
