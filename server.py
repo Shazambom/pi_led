@@ -20,7 +20,8 @@ class LEDServer(BaseHTTPRequestHandler):
 		content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
 		post_data = self.rfile.read(content_length) # <--- Gets the data itself
 
-		controller.put(post_data)
+		print(post_data)
+		controller.decode(post_data)
 		self._set_response()
 
 def on_exit():
