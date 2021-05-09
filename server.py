@@ -75,6 +75,24 @@ def rainbow():
 	board.put(frames)
 	return redirect(url_for('play'))
 
+@app.route('/flow', methods = ['GET'])
+def flow():
+	g = Generator(num_lights, num_colors)
+	e = Encoder(num_lights, num_colors)
+	flow = g.generate_flow_frames(250)
+	frames = e.encode(flow)
+	board.put(frames)
+	return redirect(url_for('play'))
+
+@app.route('/dot', methods = ['GET'])
+def dot():
+	g = Generator(num_lights, num_colors)
+	e = Encoder(num_lights, num_colors)
+	dot = g.generate_dot_frames(250)
+	frames = e.encode(dot)
+	board.put(frames)
+	return redirect(url_for('play'))
+
 
 
 
