@@ -1,0 +1,12 @@
+<html>
+   <body>
+	   	<div id='buttons'>
+		    {% for data in data %}
+		        <form action="http://localhost:5000/play" method = "POST"
+		        enctype = "multipart/form-data">
+		        	<input type="submit" value={{ data }} name={{ data }} />
+		        </form>
+		    {% endfor %}
+	</div>
+   </body>
+</html>

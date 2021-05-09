@@ -42,6 +42,23 @@ def upload_file_route():
 	elif request.method == 'GET':
 		return make_tree(uploads_dir)
 
+def get_uploaded_files():
+	children = make_tree(uploads_dir)["children"]
+	files = []
+	for child in children:
+		files.append(child["name"].split('/')[-1])
+	return files
+
+
+@app.route('/play', methods = ['GET', 'POST'])
+def play():
+	files = get_uploaded_files()
+	if request.method == 'POST':
+		for f in request.form:
+			print(f)
+		return render_template('play.html', data=files)
+	elif request.method == 'GET':
+		return render_template('play.html', data=files)
 
 
 
