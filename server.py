@@ -73,13 +73,10 @@ def play():
 def rainbow():
 	g = Generator(num_lights, num_colors)
 	e = Encoder(num_lights, num_colors)
-	rainbow = g.generate_rainbow_frames(1000)
+	rainbow = g.generate_rainbow_frames(250)
 	frames = e.encode(rainbow)
-	file = open(os.path.join(uploads_dir, "rainbow.bin"), "wb")
-	file.write(frames)
-	file.flush()
-	file.close()
-	return "Done!"
+	board.put(frames)
+	return redirect(url_for('play'))
 
 
 
