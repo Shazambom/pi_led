@@ -1,11 +1,6 @@
 import board
 import neopixel
-import time
-import colorsys
-import random
 import atexit
-import zlib
-import copy
 import queue
 import threading
 from encoder import Encoder
