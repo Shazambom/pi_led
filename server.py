@@ -16,9 +16,6 @@ num_lights = 50
 num_colors = 250
 
 #Uploader works great, only problem: we have no way of really making new frames... gotta brainstorm on an easy way to make new frames instead of just programming new ways.
-#TODO integrate the LED player with this server: use the /play route that takes in a file name in a POST request. On the GET request of /play display all of the files that could be played as buttons that trigger the /play POST request.
-#TODO add routes for generating rainbow, flow, and dot and storing them in the frames folder.
-#TODO refactor rainbow, flow, and dot out of the encoder. Maybe have them inherit from the encoder? Not sure.
 
 board = Led(num_lights, num_colors)
 board.run()
