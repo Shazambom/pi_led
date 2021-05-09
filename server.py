@@ -4,6 +4,7 @@ from werkzeug.datastructures import  FileStorage
 import os
 from generator import Generator
 from encoder import Encoder
+from led import Led
 app = Flask(__name__, template_folder='./html')
 
 
@@ -18,7 +19,8 @@ num_colors = 250
 #TODO add routes for generating rainbow, flow, and dot and storing them in the frames folder.
 #TODO refactor rainbow, flow, and dot out of the encoder. Maybe have them inherit from the encoder? Not sure.
 
-
+board = Led(num_lights, num_colors)
+board.run()
 
 def make_tree(path):
     tree = dict(name=path, children=[])
@@ -60,7 +62,8 @@ def play():
 	files = get_uploaded_files()
 	if request.method == 'POST':
 		for f in request.form:
-			print(f)
+			with open(os.path.join(uploads_dir, f), "rb") as frames:
+				board.put(frames.read())
 		return render_template('play.html', data=files)
 	elif request.method == 'GET':
 		return render_template('play.html', data=files)
