@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import zlib
 
 # Byte structure: based on the num_lights we need to create a list of lists frames = [[RGB values for num_ligts]]
