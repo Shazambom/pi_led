@@ -13,19 +13,39 @@ class Font:
 		font_file = open('font.json', 'r')
 		self.font = json.load(font_file)
 		font_file.close()
+		self.generate_table()
 
-#TODO: Still need to get the begining of the frames to start with off leds so the text scrolls past properly
-	def TextToFrames(self, text):
-		if not text.isalnum():
-			return [[]]
+	def generate_table(self):
+		self.lookup = []
+		count = 0
+		for w in range(self.width):
+			column = []
+			for h in range(self.height):
+				column.append(count)
+				count += 1 
+			# We're doing this weird reverse thing because even though it'll look wrong on a grid of pixels this will look correct when using the 
+			# actual LEDs because have to have the numbered lights near one another
+			if w % 2 == 1:
+				column.reverse()
+			self.lookup.append(column)
+
+
+	def text_to_frames(self, text):
+		#extracting the values from the characters
 		font_arr = []
 		for char in text.upper():
-			font_arr.append(self.font[char])
-		num_frames = (self.font["width"] * len(text))
+			if char in self.font:
+				font_arr.append(self.font[char])
 		frames = []
-
 		slices = []
+		num_frames = (self.font["width"] * len(text))
 		num_slices = num_frames * self.width
+
+
+
+		for w in range(self.width):
+			slices.append([0] * self.height)
+
 		for i in range(num_slices):
 			letter = int(i / self.font["width"])
 			rem = i % self.font["width"]
@@ -47,23 +67,24 @@ class Font:
 						sl = slices[i + x]
 						loc = x*self.height + y
 						if sl[y] == 1:
-							frame[loc] = white
+							frame[self.lookup[x][y]] = white
 			frames.append(frame)
 		return frames
 
 
 font = Font(5, 50)
-frames = font.TextToFrames('thequickfoxjumpedoverthelazydog1234567890')
+frames = font.text_to_frames('thequickfoxjumpedoverthelazydog1234567890')
 images = []
 for frame in frames:
 	image = Image.new('RGB', (50, 5), off)
 	for i in range(image.size[0]):
 		for j in range(image.size[1]):
-			loc = i*5 + j
+			loc = font.lookup[i][j]
 			image.putpixel((i, j), frame[loc])
 	images.append(image)
 
 images[0].save('font_experiment.gif', save_all=True, append_images=images[1:], optimize=False, duration=40, loop=0)
+
 
 
 
@@ -75,3 +96,11 @@ images[0].save('font_experiment.gif', save_all=True, append_images=images[1:], o
 # 2, 7, 12, 17, 22, 27, 32, 37, 42, 47,
 # 3, 8, 13, 18, 23, 28, 33, 38, 43, 48,
 # 4, 9, 14, 19, 24, 29, 34, 39, 44, 49,
+
+# 	<----------			<----------
+# 0, 9, 10, 19, 20, 29, 30, 39, 40, 49,
+# 1, 8, 11, 18, 21, 28, 31, 38, 41, 48,
+# 2, 7, 12, 17, 22, 27, 32, 37, 42, 47,
+# 3, 6, 13, 16, 23, 26, 33, 36, 43, 46,
+# 4, 5, 14, 15, 24, 25, 34, 35, 44, 45,
+
