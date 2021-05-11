@@ -46,7 +46,7 @@ def upload_file_route():
 		f.save(os.path.join(uploads_dir, secure_filename(f.filename)))
 		return 'file uploaded successfully'
 	elif request.method == 'GET':
-		return make_tree(uploads_dir)
+		return render_template('upload.html')
 
 def get_uploaded_files():
 	children = make_tree(uploads_dir)["children"]
