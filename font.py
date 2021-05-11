@@ -42,10 +42,11 @@ class Font:
 		num_slices = num_frames * self.width
 
 
-
+		#Adding blackspace before the scroll
 		for w in range(self.width):
 			slices.append([0] * self.height)
 
+		#Computing all of the slices that each frame will have to use
 		for i in range(num_slices):
 			letter = int(i / self.font["width"])
 			rem = i % self.font["width"]
@@ -59,13 +60,13 @@ class Font:
 							sl.append(0)
 			slices.append(sl)
 
+		#Creating all of the frames using the slices
 		for i in range(num_slices):
 			frame = [off] * (self.height * self.width)
 			for y in range(self.height):
 				for x in range(self.width):
 					if i + x < num_slices:
 						sl = slices[i + x]
-						loc = x*self.height + y
 						if sl[y] == 1:
 							frame[self.lookup[x][y]] = white
 			frames.append(frame)
