@@ -60,8 +60,10 @@ class Font:
 							sl.append(0)
 			slices.append(sl)
 
+
+
 		#Creating all of the frames using the slices
-		for i in range(len(slices)):
+		for i in range(len(slices) + self.width + 1):
 			frame = [off] * (self.height * self.width)
 			for y in range(self.height):
 				for x in range(self.width):
