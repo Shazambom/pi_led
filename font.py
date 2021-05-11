@@ -1,5 +1,4 @@
 import json
-# from PIL import Image, ImageDraw
 
 white = (255, 255, 255)
 off = (0, 0, 0)
@@ -70,20 +69,6 @@ class Font:
 							frame[self.lookup[x][y]] = white
 			frames.append(frame)
 		return frames
-
-
-# font = Font(5, 50)
-# frames = font.text_to_frames('thequickfoxjumpedoverthelazydog1234567890')
-# images = []
-# for frame in frames:
-# 	image = Image.new('RGB', (50, 5), off)
-# 	for i in range(image.size[0]):
-# 		for j in range(image.size[1]):
-# 			loc = font.lookup[i][j]
-# 			image.putpixel((i, j), frame[loc])
-# 	images.append(image)
-
-# images[0].save('font_experiment.gif', save_all=True, append_images=images[1:], optimize=False, duration=40, loop=0)
 
 
 
