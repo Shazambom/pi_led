@@ -100,6 +100,7 @@ def text():
 		font = Font(5, int(num_lights / 5))
 		e = Encoder(num_lights, num_colors)
 		board.put(e.encode(font.text_to_frames(request.form['text'])))
+		return render_template('text.html')
 	else:
 		return render_template('text.html')
 
