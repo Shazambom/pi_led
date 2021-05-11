@@ -6,6 +6,7 @@ import os
 from generator import Generator
 from encoder import Encoder
 from led import Led
+from font import Font
 app = Flask(__name__, template_folder='./html')
 
 
@@ -92,6 +93,15 @@ def dot():
 	frames = e.encode(dot)
 	board.put(frames)
 	return redirect(url_for('play'))
+
+@app.route('/text', methods = ['GET', 'POST'])
+def text():
+	if request.method == 'POST':
+		font = Font(5, num_lights / 5)
+		e = Encoder(num_lights, num_colors)
+		board.put(e.encode(font.text_to_frames(request.form['text'])))
+	else:
+		return render_template('text.html')
 
 
 

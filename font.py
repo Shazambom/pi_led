@@ -1,5 +1,5 @@
 import json
-from PIL import Image, ImageDraw
+# from PIL import Image, ImageDraw
 
 white = (255, 255, 255)
 off = (0, 0, 0)
@@ -72,30 +72,20 @@ class Font:
 		return frames
 
 
-font = Font(5, 50)
-frames = font.text_to_frames('thequickfoxjumpedoverthelazydog1234567890')
-images = []
-for frame in frames:
-	image = Image.new('RGB', (50, 5), off)
-	for i in range(image.size[0]):
-		for j in range(image.size[1]):
-			loc = font.lookup[i][j]
-			image.putpixel((i, j), frame[loc])
-	images.append(image)
+# font = Font(5, 50)
+# frames = font.text_to_frames('thequickfoxjumpedoverthelazydog1234567890')
+# images = []
+# for frame in frames:
+# 	image = Image.new('RGB', (50, 5), off)
+# 	for i in range(image.size[0]):
+# 		for j in range(image.size[1]):
+# 			loc = font.lookup[i][j]
+# 			image.putpixel((i, j), frame[loc])
+# 	images.append(image)
 
-images[0].save('font_experiment.gif', save_all=True, append_images=images[1:], optimize=False, duration=40, loop=0)
-
-
+# images[0].save('font_experiment.gif', save_all=True, append_images=images[1:], optimize=False, duration=40, loop=0)
 
 
-
-
-# 	<----------			<----------
-# 0, 5, 10, 15, 20, 25, 30, 35, 40, 45,
-# 1, 6, 11, 16, 21, 26, 31, 36, 41, 46,
-# 2, 7, 12, 17, 22, 27, 32, 37, 42, 47,
-# 3, 8, 13, 18, 23, 28, 33, 38, 43, 48,
-# 4, 9, 14, 19, 24, 29, 34, 39, 44, 49,
 
 # 	<----------			<----------
 # 0, 9, 10, 19, 20, 29, 30, 39, 40, 49,
