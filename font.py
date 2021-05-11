@@ -48,8 +48,8 @@ class Font:
 		for ns in range(num_slices):
 			letter = int(ns / self.font["width"])
 			rem = ns % self.font["width"]
-			if rem == 0:
-				slices.append([0] * self.height)
+			# if rem == 0:
+			# 	slices.append([0] * self.height)
 			sl = []
 			for i in range(self.font["height"]):
 				for j in range(self.font["width"]):
