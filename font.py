@@ -38,7 +38,7 @@ class Font:
 				font_arr.append(self.font[char])
 		frames = []
 		slices = []
-		num_slices = (self.font["width"] * len(text))
+		num_slices = (self.font["width"] * len(text)) + self.width
 
 
 		#Adding blackspace before the scroll
