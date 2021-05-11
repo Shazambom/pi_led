@@ -97,7 +97,7 @@ def dot():
 @app.route('/text', methods = ['GET', 'POST'])
 def text():
 	if request.method == 'POST':
-		font = Font(5, num_lights / 5)
+		font = Font(5, int(num_lights / 5))
 		e = Encoder(num_lights, num_colors)
 		board.put(e.encode(font.text_to_frames(request.form['text'])))
 	else:
