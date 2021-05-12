@@ -74,3 +74,31 @@ class Generator:
 					frames.append(colors)
 				forward = True
 		return frames
+
+	def generate_radiate_frames(self, num_frames):
+		frames = []
+		colors = []
+		start = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
+		colors.append(start)
+
+		for i in range(1, int(self.num_lights / 2)):
+			colors.append(self.next_color_rainbow(colors[i - 1]))
+
+		for frame in range(num_frames):
+			color = self.next_color_rainbow(colors[-1])
+			colors = colors[1:]
+			colors.append(color)
+			frame = copy.deepcopy(colors)
+			reversed_frames = copy.deepcopy(colors)
+			reversed_frames.reverse()
+			frame.extend(reversed_frames)
+			frames.append(frame)
+		return frames
+
+
+
+
+
+
+
+

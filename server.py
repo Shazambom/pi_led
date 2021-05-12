@@ -80,8 +80,7 @@ def rainbow():
 def flow():
 	g = Generator(num_lights, num_colors)
 	e = Encoder(num_lights, num_colors)
-	flow = g.generate_flow_frames(250)
-	frames = e.encode(flow)
+	frames = e.encode(g.generate_flow_frames(250))
 	board.put(frames)
 	return redirect(url_for('play'))
 
@@ -89,8 +88,15 @@ def flow():
 def dot():
 	g = Generator(num_lights, num_colors)
 	e = Encoder(num_lights, num_colors)
-	dot = g.generate_dot_frames(250)
-	frames = e.encode(dot)
+	frames = e.encode(g.generate_dot_frames(250))
+	board.put(frames)
+	return redirect(url_for('play'))
+
+@app.route('/radiate', methods = ['GET'])
+def radiate():
+	g = Generator(num_lights, num_colors)
+	e = Encoder(num_lights, num_colors)
+	frames = e.encode(g.generate_radiate_frames(250))
 	board.put(frames)
 	return redirect(url_for('play'))
 
