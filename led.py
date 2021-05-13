@@ -5,7 +5,6 @@ import atexit
 import queue
 import threading
 from encoder import Encoder
-import time
 
 # Byte structure: based on the num_lights we need to create a list of lists frames = [[RGB values for num_ligts]]
 # RGB values will be encoded via chunks of 3 bytes
@@ -39,7 +38,6 @@ class Led:
 			for i in range(self.num_lights):
 				self.pixels[i] = buff[i]
 			self.pixels.show()
-			time.sleep(0.1)
 		return
 
 	def on_exit(self):
