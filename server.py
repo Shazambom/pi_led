@@ -13,7 +13,7 @@ app = Flask(__name__, template_folder='./html')
 uploads_dir = os.path.join('.', 'frames')
 os.makedirs(uploads_dir, exist_ok=True)
 
-num_lights = 50
+num_lights = 100
 num_colors = 250
 
 #Uploader works great, only problem: we have no way of really making new frames... gotta brainstorm on an easy way to make new frames instead of just programming new ways.
