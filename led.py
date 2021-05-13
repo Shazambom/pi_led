@@ -13,7 +13,7 @@ from encoder import Encoder
 
 class Led:
 	def __init__(self, num_lights, num_colors):
-		self.pixels = neopixel.NeoPixel(board.D18, num_lights, auto_write=False)
+		self.pixels = neopixel.NeoPixel(board.D18, num_lights, auto_write=True)
 		self.encoder = Encoder(num_lights, num_colors)
 		atexit.register(self.on_exit)
 		self.num_lights = num_lights
@@ -35,8 +35,9 @@ class Led:
 
 	def write(self, frames):
 		for buff in frames:
-			for i in range(self.num_lights):
-				self.pixels[i] = buff[i]
+			# for i in range(self.num_lights):
+			# 	self.pixels[i] = buff[i]
+			self.pixels._transmit(buff)
 			self.pixels.show()
 		return
 
