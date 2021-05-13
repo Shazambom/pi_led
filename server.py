@@ -16,7 +16,7 @@ os.makedirs(uploads_dir, exist_ok=True)
 num_lights = 100
 num_colors = 250
 
-#Uploader works great, only problem: we have no way of really making new frames... gotta brainstorm on an easy way to make new frames instead of just programming new ways.
+#TODO: Allow custom delay times for playing the frames, maybe add it to the frame data
 
 board = Led(num_lights, num_colors)
 board.run()
