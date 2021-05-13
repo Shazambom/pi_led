@@ -5,6 +5,7 @@ import atexit
 import queue
 import threading
 from encoder import Encoder
+import time
 
 # Byte structure: based on the num_lights we need to create a list of lists frames = [[RGB values for num_ligts]]
 # RGB values will be encoded via chunks of 3 bytes
@@ -13,7 +14,7 @@ from encoder import Encoder
 
 class Led:
 	def __init__(self, num_lights, num_colors):
-		self.pixels = neopixel.NeoPixel(board.D18, num_lights, auto_write=True)
+		self.pixels = neopixel.NeoPixel(board.D18, num_lights, auto_write=False)
 		self.encoder = Encoder(num_lights, num_colors)
 		atexit.register(self.on_exit)
 		self.num_lights = num_lights
@@ -35,10 +36,10 @@ class Led:
 
 	def write(self, frames):
 		for buff in frames:
-			# for i in range(self.num_lights):
-			# 	self.pixels[i] = buff[i]
-			self.pixels._transmit(buff)
+			for i in range(self.num_lights):
+				self.pixels[i] = buff[i]
 			self.pixels.show()
+			time.sleep(0.1)
 		return
 
 	def on_exit(self):
