@@ -13,7 +13,7 @@ from encoder import Encoder
 
 class Led:
 	def __init__(self, num_lights, num_colors):
-		self.pixels = neopixel.NeoPixel(board.D18, num_lights)
+		self.pixels = neopixel.NeoPixel(board.D18, num_lights, auto_write=false)
 		self.encoder = Encoder(num_lights, num_colors)
 		atexit.register(self.on_exit)
 		self.num_lights = num_lights
