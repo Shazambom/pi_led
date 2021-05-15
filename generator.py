@@ -248,26 +248,20 @@ class Generator:
 		return ((x + w) % w, (y + h) % h)
 
 
-#Turns out the game of life generator works perfectly fine its just when you constrain it to a looped area that is relatively small it doesnt work very well
+#Fixed all the bugs, I'm gonna keep the example gif code here commented out because it may be useful for other experiments
 # from PIL import Image
 
-# gen = Generator(250, 250, 5)
+# gen = Generator(250, 250, 10)
 # gol_frames = gen.generate_game_of_life_frames(250)
 # images = []
 # for frame in gol_frames:
-# 	image = Image.new('RGB', (50, 5), off)
+# 	image = Image.new('RGB', (25, 10), off)
 # 	for i in range(image.size[0]):
 # 		for j in range(image.size[1]):
 # 			image.putpixel((i, j), frame[gen.lookup[i][j]])
 # 	images.append(image)
 
 # images[0].save('gol_experiment.gif', save_all=True, append_images=images[1:], optimize=False, duration=100, loop=0)
-
-
-
-
-
-
 
 
 # gen = Generator(100, 250, 5)
