@@ -248,6 +248,51 @@ class Generator:
 		return ((x + w) % w, (y + h) % h)
 
 
+	def generate_wave_frames(self, num_frames):
+		frames = []
+		start = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
+		
+
+		board = []
+		neighbors = []
+		for x in range(self.width):
+			row = []
+			n_row = []
+			for y in range(self.height):
+				if x == int(self.width / 2) and y == int(self.height / 2):
+					row.append(start)
+				else:
+					row.append(off)
+				n_row.append(self.get_neighbors(x, y, self.width, self.height))
+			board.append(row)
+			neighbors.append(n_row)
+
+		buff = copy.deepcopy(board)
+		for f in range(num_frames):
+			frame = [off] * self.num_lights
+			for x in range(self.width):
+				for y in range(self.height):
+					frame[self.lookup[x][y]] = board[x][y]
+					if board[x][y] == off:
+						avg_color = off
+						for neighbor in neighbors[x][y]:
+							n = board[neighbor[0]][neighbor[1]]
+							avg_color[0] += n[0]
+							avg_color[1] += n[1]
+							avg_color[2] += n[2]
+						avg_color = (int(avg_color[0] / 8), int(avg_color[1] / 8), int(avg_color[2] / 8))
+						buff[x][y] = avg_color
+					else:
+						buff[x][y] = self.next_color_rainbow(board[x][y])
+
+			frames.append(frame)
+			board = copy.deepcopy(buff)
+
+
+		return frames
+
+
+
 #Fixed all the bugs, I'm gonna keep the example gif code here commented out because it may be useful for other experiments
 # from PIL import Image
 

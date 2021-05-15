@@ -101,6 +101,8 @@ def play_generated_frames(args, func):
 		frames = g.generate_snake_frames()
 	elif func == "game_of_life":
 		frames = g.generate_game_of_life_frames(args['num_frames'])
+	elif func == "wave":
+		frames = g.generate_wave_frames(agrs['num_frames'])
 
 	if frames is not None:
 		board.put(e.encode(frames), args['fps'])
