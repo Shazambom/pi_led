@@ -173,9 +173,10 @@ class Generator:
 
 		board = [0] * self.num_lights
 
-		for i in range(self.num_lights):
-			if random.randint(0, 10) < 8:
-				board[i] = 1
+		for x in range(self.width):
+			for y in range(self.height):
+				if x % 3 == 0:
+					board[self.lookup[x][y]] = 1
 
 		neighbors = [[]] * self.num_lights
 
@@ -200,9 +201,9 @@ class Generator:
 			frame = []
 			for cell in board:
 				if cell == 1:
-					frame.append(color)
-				else:
 					frame.append(off)
+				else:
+					frame.append(color)
 			color = self.next_color_rainbow(color)
 			frames.append(frame)
 		return frames
