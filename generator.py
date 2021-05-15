@@ -128,13 +128,13 @@ class Generator:
 
 
 
-# gen = Generator(50, 250)
-# e = Encoder(50, 250)
+# gen = Generator(100, 250)
+# e = Encoder(100, 250)
 
 # flow_frames = gen.generate_flow_frames(1000)
 # dot_frames = gen.generate_dot_frames(1000)
 # radiate_frames = gen.generate_radiate_frames(1000)
-# cascade_frames = gen.generate_cascade_frames(1000, 5)
+# cascade_frames = gen.generate_cascade_frames(5)
 
 # flow_f = open("flow.bin", "wb")
 # dot_f = open("dot.bin", "wb")
