@@ -63,7 +63,7 @@ def play():
 	files = get_uploaded_files()
 	if request.method == 'POST':
 		f = request.form["file"]
-		fps = request.form["fps"]
+		fps = int(request.form["fps"])
 		with open(os.path.join(uploads_dir, f), "rb") as frames:
 			board.put(frames.read(), fps)
 		return render_template('play.html', data=files)
