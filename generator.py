@@ -197,7 +197,7 @@ class Generator:
 					else:
 						buff[self.lookup[x][y]] = 0
 			board = copy.deepcopy(buff)
-			# print(board)
+			print(board)
 			frame = []
 			for cell in board:
 				if cell == 1:
