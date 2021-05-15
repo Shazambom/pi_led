@@ -4,7 +4,7 @@
 		    {% for data in data %}
 		        <form action="{{url_for('play')}}" method = "POST"
 		        enctype = "multipart/form-data">
-		        	<input type="number" name="fps"/>
+		        	<input type="number" value=60 name="fps"/>
 		        	<input type="submit" value={{ data }} name="file" />
 		        </form>
 		    {% endfor %}
