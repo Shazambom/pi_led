@@ -173,8 +173,8 @@ class Generator:
 		frames = []
 		color = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
 
-		b_width = self.width * 5
-		b_height = self.height * 10
+		b_width = self.width * 3
+		b_height = self.height * 5
 
 		board = []
 		for x in range(b_width):
