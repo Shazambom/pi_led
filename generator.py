@@ -12,7 +12,7 @@ class Generator:
 		self.num_lights = num_lights
 		self.num_colors = num_colors
 		self.height = height
-		self.width = (num_lights / height)
+		self.width = int(num_lights / height)
 		self.generate_table()
 
 
