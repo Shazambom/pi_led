@@ -175,7 +175,7 @@ class Generator:
 
 		for x in range(self.width):
 			for y in range(self.height):
-				if x % 3 == 0:
+				if x % 4 == 0:
 					board[self.lookup[x][y]] = 1
 
 		neighbors = [[]] * self.num_lights
