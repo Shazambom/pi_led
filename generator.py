@@ -188,21 +188,25 @@ class Generator:
 		buff = copy.deepcopy(board)
 
 		for frame in range(num_frames):
+			print("__________________frame "+ str(frame) +"_______________________")
 			for x in range(self.width):
+				line = ""
 				for y in range(self.height):
-					print("x: " + str(x) + " y: " + str(y))
+					line += str(board[self.lookup[x][y]]) + ", "
+					# print("x: " + str(x) + " y: " + str(y))
 					alive = 0
 					for neighbor in neighbors[self.lookup[x][y]]:
 						alive += board[self.lookup[neighbor[0]][neighbor[1]]]
-						print("neighbor: " + str(board[self.lookup[neighbor[0]][neighbor[1]]]))
-					print("alive_neighbors: " + str(alive))
-					print("cell: " + str(board[self.lookup[x][y]]))
+					# 	print("neighbor: " + str(board[self.lookup[neighbor[0]][neighbor[1]]]))
+					# print("alive_neighbors: " + str(alive))
+					# print("cell: " + str(board[self.lookup[x][y]]))
 					if (board[self.lookup[x][y]] == 1 and alive == 2) or alive == 3:
-						print("cell is alive")
+						# print("cell is alive")
 						buff[self.lookup[x][y]] = 1
 					else:
-						print("cell is dead")
+						# print("cell is dead")
 						buff[self.lookup[x][y]] = 0
+				print(line)
 			board = copy.deepcopy(buff)
 			frame = []
 			for cell in board:
