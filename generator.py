@@ -274,14 +274,13 @@ class Generator:
 				for y in range(self.height):
 					frame[self.lookup[x][y]] = board[x][y]
 					if board[x][y] == off:
-						avg_color = off
+						avg_color = [0, 0, 0]
 						for neighbor in neighbors[x][y]:
 							n = board[neighbor[0]][neighbor[1]]
 							avg_color[0] += n[0]
 							avg_color[1] += n[1]
 							avg_color[2] += n[2]
-						avg_color = (int(avg_color[0] / 8), int(avg_color[1] / 8), int(avg_color[2] / 8))
-						buff[x][y] = avg_color
+						buff[x][y] = (int(avg_color[0] / 8), int(avg_color[1] / 8), int(avg_color[2] / 8))
 					else:
 						buff[x][y] = self.next_color_rainbow(board[x][y])
 
