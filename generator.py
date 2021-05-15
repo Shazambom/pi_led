@@ -174,7 +174,7 @@ class Generator:
 		board = [0] * self.num_lights
 
 		for i in range(self.num_lights):
-			if random.randint(0, 10) < 6:
+			if random.randint(0, 10) < 8:
 				board[i] = 1
 
 		neighbors = [[]] * self.num_lights
@@ -197,7 +197,6 @@ class Generator:
 					else:
 						buff[self.lookup[x][y]] = 0
 			board = copy.deepcopy(buff)
-			print(board)
 			frame = []
 			for cell in board:
 				if cell == 1:
@@ -206,7 +205,6 @@ class Generator:
 					frame.append(off)
 			color = self.next_color_rainbow(color)
 			frames.append(frame)
-			# print(frame)
 		return frames
 
 
