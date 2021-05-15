@@ -205,6 +205,8 @@ class Generator:
 				else:
 					frame.append(off)
 			color = self.next_color_rainbow(color)
+			frames.append(frame)
+		return frames
 
 
 
