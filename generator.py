@@ -286,13 +286,17 @@ class Generator:
 							avg_color[2] += n[2]
 						buff[x][y] = (int(avg_color[0] / 8), int(avg_color[1] / 8), int(avg_color[2] / 8))
 					else:
-						buff[x][y] = (board[x][y][0] - 5, board[x][y][1] - 5, board[x][y][2] - 5)
+						buff[x][y] = (self.decay(board[x][y][0], 5), self.decay(board[x][y][1], 5), self.decay(board[x][y][2], 5))
 
 			frames.append(frame)
 			board = copy.deepcopy(buff)
 
 
 		return frames
+
+	def decay(self, channel, amount):
+		delta = channel - amount
+		return delta if delta > 0 else 0
 
 
 
