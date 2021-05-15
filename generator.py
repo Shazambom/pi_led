@@ -286,7 +286,7 @@ class Generator:
 							avg_color[2] += n[2]
 						buff[x][y] = (int(avg_color[0] / 8), int(avg_color[1] / 8), int(avg_color[2] / 8))
 					else:
-						decay_val = 10
+						decay_val = 7
 						buff[x][y] = (self.decay(board[x][y][0], decay_val), self.decay(board[x][y][1], decay_val), self.decay(board[x][y][2], decay_val))
 
 			frames.append(frame)
