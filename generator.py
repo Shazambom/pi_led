@@ -123,16 +123,18 @@ class Generator:
 
 		for light in range(0, self.num_lights):
 			color = self.next_color_rainbow(color)
-			x = self.width - 1
 			y = light % self.height
-			pos = self.lookup[x][y]
+			pos = self.lookup[self.width - 1][y]
 			
 			board[pos] = color
 			frames.append(copy.deepcopy(board))
 			
-			for sl in range(int(self.num_lights / self.height)):
-				x -= 1
+			for x in range(self.width, -1, -1):
 				if pos - self.height < 0 or board[self.lookup[x][y]] != off:
+					itter = board[1:pos]
+					color = self.next_color_rainbow(color)
+					itter.append(color)
+					board[0:pos] = itter
 					break
 				board[pos] = off
 				pos = self.lookup[x][y]
