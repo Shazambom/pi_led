@@ -4,6 +4,9 @@ import random
 import copy
 
 
+off = (0, 0, 0)
+white = (255, 255, 255)
+
 class Generator:
 	def __init__(self, num_lights, num_colors):
 		self.num_lights = num_lights
@@ -50,8 +53,6 @@ class Generator:
 	def generate_dot_frames(self, num_frames):
 		frames = []
 		buff = []
-		white = (255, 255, 255)
-		off = (0, 0, 0)
 
 		for i in range(self.num_lights):
 			colors = []
@@ -94,6 +95,38 @@ class Generator:
 			frame.extend(reversed_frames)
 			frames.append(frame)
 		return frames
+
+	def generate_cascade_frames(self, num_frames, height):
+		frames = []
+		color = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
+
+		board = [off] * self.num_lights
+
+		for light in range(0, self.num_lights):
+			color = self.next_color_rainbow(color)
+			rem = light % height
+			pos = self.num_lights - 1 - rem
+			
+			board[pos] = color
+			frames.append(copy.deepcopy(board))
+			for sl in range(int(self.num_lights / height)):
+				if pos - height < 0 or board[pos - height] != off:
+					break
+				board[pos] = off
+				pos = pos - height
+				board[pos] = color
+				frames.append(copy.deepcopy(board))
+		return frames
+
+
+
+
+
+
+
+
+
+
 
 # gen = Generator(50, 250)
 # e = Encoder(50, 250)

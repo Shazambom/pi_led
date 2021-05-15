@@ -15,6 +15,7 @@ os.makedirs(uploads_dir, exist_ok=True)
 
 num_lights = 100
 num_colors = 250
+screen_height = 5
 
 #TODO: Allow custom delay times for playing the frames, maybe add it to the frame data
 
@@ -100,10 +101,18 @@ def radiate():
 	board.put(frames)
 	return redirect(url_for('play'))
 
+@app.route('/cascade', methods = ['GET'])
+def cascade():
+	g = Generator(num_lights, num_colors)
+	e = Encoder(num_lights, num_colors)
+	frames = e.encode(g.generate_cascade_frames(250, screen_height))
+	board.put(frames)
+	return redirect(url_for('play'))
+
 @app.route('/text', methods = ['GET', 'POST'])
 def text():
 	if request.method == 'POST':
-		font = Font(5, int(num_lights / 5))
+		font = Font(screen_height, int(num_lights / screen_height))
 		e = Encoder(num_lights, num_colors)
 		board.put(e.encode(font.text_to_frames(request.form['text'])))
 		return render_template('text.html')
