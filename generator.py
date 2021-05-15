@@ -174,7 +174,9 @@ class Generator:
 		board = [0] * self.num_lights
 
 		seed = bin(random.randint(0, self.num_lights))
+		print(seed)
 		for i, digit in enumerate(seed):
+			print(digit)
 			if digit == '1':
 				board[i] = 1
 
