@@ -119,7 +119,7 @@ def play_generated_frames(args, func):
 	elif func == "cascade":
 		frames = g.generate_cascade_frames(args['num_frames'])
 
-	if frames not None:
+	if frames is not None:
 		board.put(e.encode(frames), args['fps'])
 	return redirect(url_for('play'))
 
