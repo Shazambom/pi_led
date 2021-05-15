@@ -129,7 +129,7 @@ class Generator:
 			board[pos] = color
 			frames.append(copy.deepcopy(board))
 			
-			for x in range(self.width, -1, -1):
+			for x in range(self.width - 2, -1, -1):
 				if pos - self.height < 0 or board[self.lookup[x][y]] != off:
 					itter = board[1:pos]
 					color = self.next_color_rainbow(color)
