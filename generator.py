@@ -4,6 +4,7 @@ import random
 import copy
 
 
+
 off = (0, 0, 0)
 white = (255, 255, 255)
 
@@ -168,67 +169,99 @@ class Generator:
 		return frames
 
 	def generate_game_of_life_frames(self, num_frames):
+		boards = []
 		frames = []
 		color = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
 
-		board = [0] * self.num_lights
+		b_width = self.width * 5
+		b_height = self.height * 10
 
-		for x in range(self.width):
-			for y in range(self.height):
-				if x % 4 == 0:
-					board[self.lookup[x][y]] = 1
+		board = []
+		for x in range(b_width):
+			row = []
+			for y in range(b_height):
+				if bool(random.getrandbits(1)):
+					row.append(1)
+				else:
+					row.append(0)
+			board.append(row)
 
-		neighbors = [[]] * self.num_lights
-
-		for x in range(self.width):
-			for y in range(self.height):
-				neighbors[self.lookup[x][y]] = self.get_neighbors(x, y)
+		neighbors = []
+		for x in range(b_width):
+			row = []
+			for y in range(b_height):
+				row.append(self.get_neighbors(x, y, b_width, b_height))
+			neighbors.append(row)
 
 
 		buff = copy.deepcopy(board)
 
 		for frame in range(num_frames):
-			print("__________________frame "+ str(frame) +"_______________________")
-			for x in range(self.width):
-				line = ""
-				for y in range(self.height):
-					line += str(board[self.lookup[x][y]]) + ", "
-					# print("x: " + str(x) + " y: " + str(y))
+			for x in range(b_width):
+				for y in range(b_height):
 					alive = 0
-					for neighbor in neighbors[self.lookup[x][y]]:
-						alive += board[self.lookup[neighbor[0]][neighbor[1]]]
-					# 	print("neighbor: " + str(board[self.lookup[neighbor[0]][neighbor[1]]]))
-					# print("alive_neighbors: " + str(alive))
-					# print("cell: " + str(board[self.lookup[x][y]]))
-					if (board[self.lookup[x][y]] == 1 and alive == 2) or alive == 3:
-						# print("cell is alive")
-						buff[self.lookup[x][y]] = 1
+					for neighbor in neighbors[x][y]:
+						alive += board[neighbor[0]][neighbor[1]]
+					if (board[x][y] == 1 and alive == 2) or alive == 3:
+						buff[x][y] = 1
 					else:
-						# print("cell is dead")
-						buff[self.lookup[x][y]] = 0
-				print(line)
+						buff[x][y] = 0
 			board = copy.deepcopy(buff)
-			frame = []
-			for cell in board:
-				if cell == 1:
-					frame.append(color)
-				else:
-					frame.append(off)
+			boards.append(board)
+
+
+		height_offset = int((b_height - self.height)/ 2)
+		width_offset = int((b_width - self.width)/ 2)
+		for board in boards:
+			frame = [off] * self.num_lights
+			for x in range(self.width):
+				adj_x = x + width_offset
+				for y in range(self.height):
+					adj_y = y + height_offset
+					if board[adj_x][adj_y] == 1:
+						frame[self.lookup[x][y]] = color
+					else:
+						frame[self.lookup[x][y]] = off
 			color = self.next_color_rainbow(color)
+						
+			
 			frames.append(frame)
+
+
 		return frames
 
 
 
-	def get_neighbors(self, x, y):
-		return [self.get_safe_pos(x - 1, y - 1), self.get_safe_pos(x, y - 1), self.get_safe_pos(x + 1, y - 1), self.get_safe_pos(x - 1, y), self.get_safe_pos(x + 1, y), self.get_safe_pos(x - 1, y + 1), self.get_safe_pos(x, y + 1), self.get_safe_pos(x + 1, y + 1)]
+	def get_neighbors(self, x, y, w, h):
+		return [
+		self.get_safe_pos(x - 1, y - 1, w, h), 
+		self.get_safe_pos(x, y - 1, w, h), 
+		self.get_safe_pos(x + 1, y - 1, w, h), 
+		self.get_safe_pos(x - 1, y, w, h), 
+		self.get_safe_pos(x + 1, y, w, h), 
+		self.get_safe_pos(x - 1, y + 1, w, h), 
+		self.get_safe_pos(x, y + 1, w, h), 
+		self.get_safe_pos(x + 1, y + 1, w, h)
+		]
 
-	def get_safe_pos(self, x, y):
-		return ((x + self.width) % self.width, (y + self.height) % self.height)
+	def get_safe_pos(self, x, y, w, h):
+		return ((x + w) % w, (y + h) % h)
 
 
+#Turns out the game of life generator works perfectly fine its just when you constrain it to a looped area that is relatively small it doesnt work very well
+# from PIL import Image
 
+# gen = Generator(250, 250, 5)
+# gol_frames = gen.generate_game_of_life_frames(250)
+# images = []
+# for frame in gol_frames:
+# 	image = Image.new('RGB', (50, 5), off)
+# 	for i in range(image.size[0]):
+# 		for j in range(image.size[1]):
+# 			image.putpixel((i, j), frame[gen.lookup[i][j]])
+# 	images.append(image)
 
+# images[0].save('gol_experiment.gif', save_all=True, append_images=images[1:], optimize=False, duration=100, loop=0)
 
 
 
