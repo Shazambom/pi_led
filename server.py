@@ -105,7 +105,7 @@ def radiate():
 def cascade():
 	g = Generator(num_lights, num_colors)
 	e = Encoder(num_lights, num_colors)
-	frames = e.encode(g.generate_cascade_frames(250, screen_height))
+	frames = e.encode(g.generate_cascade_frames(screen_height))
 	board.put(frames)
 	return redirect(url_for('play'))
 

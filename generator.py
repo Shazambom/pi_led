@@ -96,7 +96,7 @@ class Generator:
 			frames.append(frame)
 		return frames
 
-	def generate_cascade_frames(self, num_frames, height):
+	def generate_cascade_frames(self, height):
 		frames = []
 		color = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
 
