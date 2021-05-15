@@ -16,6 +16,7 @@ os.makedirs(uploads_dir, exist_ok=True)
 num_lights = 100
 num_colors = 250
 screen_height = 5
+fps = 60
 
 #TODO: Allow custom delay times for playing the frames, maybe add it to the frame data
 
@@ -63,7 +64,7 @@ def play():
 	if request.method == 'POST':
 		for f in request.form:
 			with open(os.path.join(uploads_dir, f), "rb") as frames:
-				board.put(frames.read())
+				board.put(frames.read(), fps)
 		return render_template('play.html', data=files)
 	elif request.method == 'GET':
 		return render_template('play.html', data=files)
@@ -74,7 +75,7 @@ def rainbow():
 	e = Encoder(num_lights, num_colors)
 	rainbow = g.generate_rainbow_frames(250)
 	frames = e.encode(rainbow)
-	board.put(frames)
+	board.put(frames, fps)
 	return redirect(url_for('play'))
 
 @app.route('/flow', methods = ['GET'])
@@ -82,7 +83,7 @@ def flow():
 	g = Generator(num_lights, num_colors)
 	e = Encoder(num_lights, num_colors)
 	frames = e.encode(g.generate_flow_frames(250))
-	board.put(frames)
+	board.put(frames, fps)
 	return redirect(url_for('play'))
 
 @app.route('/dot', methods = ['GET'])
@@ -90,7 +91,7 @@ def dot():
 	g = Generator(num_lights, num_colors)
 	e = Encoder(num_lights, num_colors)
 	frames = e.encode(g.generate_dot_frames(250))
-	board.put(frames)
+	board.put(frames, fps)
 	return redirect(url_for('play'))
 
 @app.route('/radiate', methods = ['GET'])
@@ -98,7 +99,7 @@ def radiate():
 	g = Generator(num_lights, num_colors)
 	e = Encoder(num_lights, num_colors)
 	frames = e.encode(g.generate_radiate_frames(250))
-	board.put(frames)
+	board.put(frames, fps)
 	return redirect(url_for('play'))
 
 @app.route('/cascade', methods = ['GET'])
@@ -106,7 +107,7 @@ def cascade():
 	g = Generator(num_lights, num_colors)
 	e = Encoder(num_lights, num_colors)
 	frames = e.encode(g.generate_cascade_frames(screen_height))
-	board.put(frames)
+	board.put(frames, fps)
 	return redirect(url_for('play'))
 
 @app.route('/text', methods = ['GET', 'POST'])
