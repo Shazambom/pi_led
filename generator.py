@@ -174,7 +174,7 @@ class Generator:
 		board = [0] * self.num_lights
 
 		for i in range(self.num_lights):
-			if bool(random.getrandbits(1)) or bool(random.getrandbits(1)):
+			if random.randint(0, 10) < 6:
 				board[i] = 1
 
 		neighbors = [[]] * self.num_lights
