@@ -106,9 +106,15 @@ def parse_args(args):
 	fps = DEFAULT_FPS
 	num_frames = DEFAULT_NUM_FRAMES
 	if 'fps' in args:
-		fps = int(args['fps'])
+		try:
+			fps = int(args['fps'])
+		except ValueError:
+			pass
 	if 'num_frames' in args:
-		num_frames = int(args['num_frames'])
+		try:
+			num_frames = int(args['num_frames'])
+		except ValueError:
+			pass
 
 	return {'fps': fps, 'num_frames': num_frames}
 
