@@ -16,7 +16,7 @@ os.makedirs(uploads_dir, exist_ok=True)
 num_lights = 100
 num_colors = 250
 screen_height = 5
-FPS = 60
+DEFAULT_FPS = 60
 
 #TODO: Allow custom delay times for playing the frames, maybe add it to the frame data
 
@@ -72,43 +72,58 @@ def play():
 
 @app.route('/rainbow', methods = ['GET'])
 def rainbow():
+	fps = DEFAULT_FPS
+	if 'fps' in request.args:
+		fps = int(request.args['fps'])
 	g = Generator(num_lights, num_colors)
 	e = Encoder(num_lights, num_colors)
 	rainbow = g.generate_rainbow_frames(250)
 	frames = e.encode(rainbow)
-	board.put(frames, FPS)
+	board.put(frames, fps)
 	return redirect(url_for('play'))
 
 @app.route('/flow', methods = ['GET'])
 def flow():
+	fps = DEFAULT_FPS
+	if 'fps' in request.args:
+		fps = int(request.args['fps'])
 	g = Generator(num_lights, num_colors)
 	e = Encoder(num_lights, num_colors)
 	frames = e.encode(g.generate_flow_frames(250))
-	board.put(frames, FPS)
+	board.put(frames, fps)
 	return redirect(url_for('play'))
 
 @app.route('/dot', methods = ['GET'])
 def dot():
+	fps = DEFAULT_FPS
+	if 'fps' in request.args:
+		fps = int(request.args['fps'])
 	g = Generator(num_lights, num_colors)
 	e = Encoder(num_lights, num_colors)
 	frames = e.encode(g.generate_dot_frames(250))
-	board.put(frames, FPS)
+	board.put(frames, fps)
 	return redirect(url_for('play'))
 
 @app.route('/radiate', methods = ['GET'])
 def radiate():
+	fps = DEFAULT_FPS
+	if 'fps' in request.args:
+		fps = int(request.args['fps'])
 	g = Generator(num_lights, num_colors)
 	e = Encoder(num_lights, num_colors)
 	frames = e.encode(g.generate_radiate_frames(250))
-	board.put(frames, FPS)
+	board.put(frames, fps)
 	return redirect(url_for('play'))
 
 @app.route('/cascade', methods = ['GET'])
 def cascade():
+	fps = DEFAULT_FPS
+	if 'fps' in request.args:
+		fps = int(request.args['fps'])
 	g = Generator(num_lights, num_colors)
 	e = Encoder(num_lights, num_colors)
 	frames = e.encode(g.generate_cascade_frames(screen_height))
-	board.put(frames, FPS)
+	board.put(frames, fps)
 	return redirect(url_for('play'))
 
 @app.route('/text', methods = ['GET', 'POST'])
