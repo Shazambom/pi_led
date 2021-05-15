@@ -19,7 +19,6 @@ screen_height = 5
 DEFAULT_FPS = 60
 DEFAULT_NUM_FRAMES = 250
 
-#TODO: Allow custom delay times for playing the frames, maybe add it to the frame data
 
 board = Led(num_lights, num_colors)
 board.run()
