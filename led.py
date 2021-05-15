@@ -46,7 +46,7 @@ class Led:
 			start_time = time.perf_counter()
 		return
 
-	def sleep_for_interval(interval, start_time):
+	def sleep_for_interval(self, interval, start_time):
 		elapsed_time = start_time - time.perf_counter()
 		sleep_time = interval - elapsed_time
 		if sleep_time > 0:
