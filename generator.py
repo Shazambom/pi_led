@@ -198,6 +198,7 @@ class Generator:
 					else:
 						buff[self.lookup[x][y]] = 0
 			board = copy.deepcopy(buff)
+			print(board)
 			frame = []
 			for cell in board:
 				if cell == 1:
@@ -206,6 +207,7 @@ class Generator:
 					frame.append(off)
 			color = self.next_color_rainbow(color)
 			frames.append(frame)
+			print(frame)
 		return frames
 
 
