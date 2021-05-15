@@ -8,9 +8,28 @@ off = (0, 0, 0)
 white = (255, 255, 255)
 
 class Generator:
-	def __init__(self, num_lights, num_colors):
+	def __init__(self, num_lights, num_colors, height):
 		self.num_lights = num_lights
 		self.num_colors = num_colors
+		self.height = height
+		self.width = (num_lights / height)
+		self.generate_table()
+
+
+	def generate_table(self):
+		self.lookup = []
+		count = 0
+		for w in range(self.width):
+			column = []
+			for h in range(self.height):
+				column.append(count)
+				count += 1 
+			# We're doing this weird reverse thing because even though it'll look wrong on a grid of pixels this will look correct when using the 
+			# actual LEDs because have to have the numbered lights near one another
+			if w % 2 == 1:
+				column.reverse()
+			self.lookup.append(column)
+
 
 	def next_color_rainbow(self, color):
 		r = color[0] / 255
@@ -96,7 +115,7 @@ class Generator:
 			frames.append(frame)
 		return frames
 
-	def generate_cascade_frames(self, height):
+	def generate_cascade_frames(self):
 		frames = []
 		color = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
 
@@ -104,16 +123,19 @@ class Generator:
 
 		for light in range(0, self.num_lights):
 			color = self.next_color_rainbow(color)
-			rem = light % height
-			pos = self.num_lights - 1 - rem
+			x = self.num_lights - 1
+			y = light % self.height
+			pos = self.lookup[x][y]
 			
 			board[pos] = color
 			frames.append(copy.deepcopy(board))
-			for sl in range(int(self.num_lights / height)):
-				if pos - height < 0 or board[pos - height] != off:
+			
+			for sl in range(int(self.num_lights / self.height)):
+				x -= 1
+				if pos - self.height < 0 or board[self.lookup[x][y]] != off:
 					break
 				board[pos] = off
-				pos = pos - height
+				pos = self.lookup[x][y]
 				board[pos] = color
 				frames.append(copy.deepcopy(board))
 		return frames
@@ -128,7 +150,7 @@ class Generator:
 
 
 
-# gen = Generator(100, 250)
+# gen = Generator(100, 250, 5)
 # e = Encoder(100, 250)
 
 # flow_frames = gen.generate_flow_frames(1000)

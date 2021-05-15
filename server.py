@@ -83,7 +83,7 @@ def text():
 		return render_template('text.html')
 
 def play_generated_frames(args, func):
-	g = Generator(num_lights, num_colors)
+	g = Generator(num_lights, num_colors, screen_height)
 	e = Encoder(num_lights, num_colors)
 
 	frames = None
@@ -96,7 +96,7 @@ def play_generated_frames(args, func):
 	elif func == "radiate":
 		frames = g.generate_radiate_frames(args['num_frames'])
 	elif func == "cascade":
-		frames = g.generate_cascade_frames(screen_height)
+		frames = g.generate_cascade_frames()
 
 	if frames is not None:
 		board.put(e.encode(frames), args['fps'])
