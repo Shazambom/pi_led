@@ -192,7 +192,7 @@ class Generator:
 					alive = 0
 					for neighbor in neighbors[self.lookup[x][y]]:
 						alive += board[self.lookup[neighbor[0]][neighbor[1]]]
-					if (buff[self.lookup[x][y]] == 1 and alive == 2) or alive == 3:
+					if (board[self.lookup[x][y]] == 1 and alive == 2) or alive == 3:
 						buff[self.lookup[x][y]] = 1
 					else:
 						buff[self.lookup[x][y]] = 0
