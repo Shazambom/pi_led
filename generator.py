@@ -123,7 +123,7 @@ class Generator:
 
 		for light in range(0, self.num_lights):
 			color = self.next_color_rainbow(color)
-			x = self.num_lights - 1
+			x = self.width
 			y = light % self.height
 			pos = self.lookup[x][y]
 			
