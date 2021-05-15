@@ -73,26 +73,6 @@ def play():
 			play_generated_frames(parse_args(request.args), request.args['func'])
 		return render_template('play.html', data=files)
 
-# @app.route('/rainbow', methods = ['GET'])
-# def rainbow():
-# 	return play_generated_frames(parse_args(request.args), "rainbow")
-
-# @app.route('/flow', methods = ['GET'])
-# def flow():
-# 	return play_generated_frames(parse_args(request.args), "flow")
-
-# @app.route('/dot', methods = ['GET'])
-# def dot():
-# 	return play_generated_frames(parse_args(request.args), "dot")
-
-# @app.route('/radiate', methods = ['GET'])
-# def radiate():
-# 	return play_generated_frames(parse_args(request.args), "radiate")
-
-# @app.route('/cascade', methods = ['GET'])
-# def cascade():
-# 	return play_generated_frames(parse_args(request.args), "cascade")
-
 @app.route('/text', methods = ['GET', 'POST'])
 def text():
 	if request.method == 'POST':
@@ -117,11 +97,10 @@ def play_generated_frames(args, func):
 	elif func == "radiate":
 		frames = g.generate_radiate_frames(args['num_frames'])
 	elif func == "cascade":
-		frames = g.generate_cascade_frames(args['num_frames'])
+		frames = g.generate_cascade_frames(screen_height)
 
 	if frames is not None:
 		board.put(e.encode(frames), args['fps'])
-	return redirect(url_for('play'))
 
 def parse_args(args):
 	fps = DEFAULT_FPS
