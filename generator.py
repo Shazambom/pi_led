@@ -248,7 +248,7 @@ class Generator:
 		return ((x + w) % w, (y + h) % h)
 
 
-	def generate_wave_frames(self, num_frames):
+	def generate_dance_frames(self, num_frames):
 		frames = []
 		color = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
 		
@@ -286,7 +286,8 @@ class Generator:
 							avg_color[2] += n[2]
 						buff[x][y] = (int(avg_color[0] / 8), int(avg_color[1] / 8), int(avg_color[2] / 8))
 					else:
-						buff[x][y] = (self.decay(board[x][y][0], 5), self.decay(board[x][y][1], 5), self.decay(board[x][y][2], 5))
+						decay_val = 10
+						buff[x][y] = (self.decay(board[x][y][0], decay_val), self.decay(board[x][y][1], decay_val), self.decay(board[x][y][2], decay_val))
 
 			frames.append(frame)
 			board = copy.deepcopy(buff)
