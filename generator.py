@@ -125,7 +125,7 @@ class Generator:
 			color = self.next_color_rainbow(color)
 			x = self.width - 1 
 			y = light % self.height
-			pos = self.lookup[self.width - 1][y]
+			pos = self.lookup[x][y]
 			
 			board[pos] = color
 			frames.append(copy.deepcopy(board))
@@ -144,6 +144,32 @@ class Generator:
 				frames.append(copy.deepcopy(board))
 		return frames
 
+	def generate_snake_frames(self):
+		frames = []
+		color = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
+
+		board = [off] * self.num_lights
+
+		for light in range(0, self.num_lights):
+			color = self.next_color_rainbow(color)
+			y = light % self.height
+			pos = self.lookup[self.width - 1][y]
+			
+			board[pos] = color
+			frames.append(copy.deepcopy(board))
+			
+			for x in range(self.width -1, -1, -1):
+				if pos - self.height < 0 or board[self.lookup[x][y]] != off:
+					itter = board[1:pos]
+					color = self.next_color_rainbow(color)
+					itter.append(color)
+					board[0:pos] = itter
+					break
+				board[pos] = off
+				pos = self.lookup[x][y]
+				board[pos] = color
+				frames.append(copy.deepcopy(board))
+		return frames
 
 
 

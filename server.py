@@ -97,6 +97,8 @@ def play_generated_frames(args, func):
 		frames = g.generate_radiate_frames(args['num_frames'])
 	elif func == "cascade":
 		frames = g.generate_cascade_frames()
+	elif func == "snake":
+		frames = g.generate_snake_frames()
 
 	if frames is not None:
 		board.put(e.encode(frames), args['fps'])
