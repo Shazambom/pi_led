@@ -167,6 +167,55 @@ class Generator:
 				frames.append(copy.deepcopy(board))
 		return frames
 
+	def generate_game_of_life_frames(self, num_frames):
+		frames = []
+		color = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
+
+		board = [0] * self.num_lights
+
+		seed = bin(random.randint(0, self.num_lights))
+		for i, digit in enumerate(seed):
+			if digit == '1':
+				board[i] = 1
+
+		neighbors = [[]] * self.num_lights
+
+		for x in range(self.width):
+			for y in range(self.height):
+				neighbors[self.lookup[x][y]] = self.get_neighbors(x, y)
+
+
+		buff = copy.deepcopy(board)
+
+		for frame in range(num_frames):
+			for x in range(self.width):
+				for y in range(self.height):
+					alive = 0
+					for neighbor in neighbors[self.lookup[x][y]]:
+						alive += board[self.lookup[neighbor[0]][neighbor[1]]]
+					if (buff[self.lookup[x][y]] == 1 and alive == 2) or alive == 3:
+						buff[self.lookup[x][y]] = 1
+					else:
+						buff[self.lookup[x][y]] = 0
+			board = copy.deepcopy(buff)
+			frame = []
+			for cell in board:
+				if cell == 1:
+					frame.append(color)
+				else:
+					frame.append(off)
+			color = self.next_color_rainbow(color)
+
+
+
+	def get_neighbors(self, x, y):
+		return [self.get_safe_pos(x - 1, y - 1), self.get_safe_pos(x, y - 1), self.get_safe_pos(x + 1, y - 1), self.get_safe_pos(x - 1, y), self.get_safe_pos(x + 1, y), self.get_safe_pos(x - 1, y + 1), self.get_safe_pos(x, y + 1), self.get_safe_pos(x + 1, y + 1)]
+
+	def get_safe_pos(self, x, y):
+		return ((x + self.width) % self.width, (y + self.height) % self.height)
+
+
+
 
 
 
