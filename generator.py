@@ -133,10 +133,6 @@ class Generator:
 			for sl in range(self.width):
 				x -= 1
 				if pos - self.height < 0 or board[self.lookup[x][y]] != off:
-					itter = board[1:pos]
-					color = self.next_color_rainbow(color)
-					itter.append(color)
-					board[0:pos] = itter
 					break
 				board[pos] = off
 				pos = self.lookup[x][y]
