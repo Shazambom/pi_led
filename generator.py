@@ -250,7 +250,7 @@ class Generator:
 
 	def generate_wave_frames(self, num_frames):
 		frames = []
-		start = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
+		color = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
 		
 
 		board = []
@@ -260,7 +260,7 @@ class Generator:
 			n_row = []
 			for y in range(self.height):
 				if x == int(self.width / 2) and y == int(self.height / 2):
-					row.append(start)
+					row.append(color)
 				else:
 					row.append(off)
 				n_row.append(self.get_neighbors(x, y, self.width, self.height))
@@ -272,6 +272,10 @@ class Generator:
 			frame = [off] * self.num_lights
 			for x in range(self.width):
 				for y in range(self.height):
+					if random.randint(0, 100) < 15:
+						color = self.next_color_rainbow(color)
+						board[x][y] = color
+
 					frame[self.lookup[x][y]] = board[x][y]
 					if board[x][y] == off:
 						avg_color = [0, 0, 0]
