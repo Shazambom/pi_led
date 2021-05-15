@@ -17,6 +17,7 @@ num_lights = 100
 num_colors = 250
 screen_height = 5
 DEFAULT_FPS = 60
+DEFAULT_NUM_FRAMES = 250
 
 #TODO: Allow custom delay times for playing the frames, maybe add it to the frame data
 
@@ -68,63 +69,29 @@ def play():
 			board.put(frames.read(), fps)
 		return render_template('play.html', data=files)
 	elif request.method == 'GET':
+		if "func" in request.args:
+			play_generated_frames(parse_args(request.args), request.args['func'])
 		return render_template('play.html', data=files)
 
-@app.route('/rainbow', methods = ['GET'])
-def rainbow():
-	fps = DEFAULT_FPS
-	if 'fps' in request.args:
-		fps = int(request.args['fps'])
-	g = Generator(num_lights, num_colors)
-	e = Encoder(num_lights, num_colors)
-	rainbow = g.generate_rainbow_frames(250)
-	frames = e.encode(rainbow)
-	board.put(frames, fps)
-	return redirect(url_for('play'))
+# @app.route('/rainbow', methods = ['GET'])
+# def rainbow():
+# 	return play_generated_frames(parse_args(request.args), "rainbow")
 
-@app.route('/flow', methods = ['GET'])
-def flow():
-	fps = DEFAULT_FPS
-	if 'fps' in request.args:
-		fps = int(request.args['fps'])
-	g = Generator(num_lights, num_colors)
-	e = Encoder(num_lights, num_colors)
-	frames = e.encode(g.generate_flow_frames(250))
-	board.put(frames, fps)
-	return redirect(url_for('play'))
+# @app.route('/flow', methods = ['GET'])
+# def flow():
+# 	return play_generated_frames(parse_args(request.args), "flow")
 
-@app.route('/dot', methods = ['GET'])
-def dot():
-	fps = DEFAULT_FPS
-	if 'fps' in request.args:
-		fps = int(request.args['fps'])
-	g = Generator(num_lights, num_colors)
-	e = Encoder(num_lights, num_colors)
-	frames = e.encode(g.generate_dot_frames(250))
-	board.put(frames, fps)
-	return redirect(url_for('play'))
+# @app.route('/dot', methods = ['GET'])
+# def dot():
+# 	return play_generated_frames(parse_args(request.args), "dot")
 
-@app.route('/radiate', methods = ['GET'])
-def radiate():
-	fps = DEFAULT_FPS
-	if 'fps' in request.args:
-		fps = int(request.args['fps'])
-	g = Generator(num_lights, num_colors)
-	e = Encoder(num_lights, num_colors)
-	frames = e.encode(g.generate_radiate_frames(250))
-	board.put(frames, fps)
-	return redirect(url_for('play'))
+# @app.route('/radiate', methods = ['GET'])
+# def radiate():
+# 	return play_generated_frames(parse_args(request.args), "radiate")
 
-@app.route('/cascade', methods = ['GET'])
-def cascade():
-	fps = DEFAULT_FPS
-	if 'fps' in request.args:
-		fps = int(request.args['fps'])
-	g = Generator(num_lights, num_colors)
-	e = Encoder(num_lights, num_colors)
-	frames = e.encode(g.generate_cascade_frames(screen_height))
-	board.put(frames, fps)
-	return redirect(url_for('play'))
+# @app.route('/cascade', methods = ['GET'])
+# def cascade():
+# 	return play_generated_frames(parse_args(request.args), "cascade")
 
 @app.route('/text', methods = ['GET', 'POST'])
 def text():
@@ -136,7 +103,35 @@ def text():
 	else:
 		return render_template('text.html')
 
+def play_generated_frames(args, func):
+	g = Generator(num_lights, num_colors)
+	e = Encoder(num_lights, num_colors)
 
+	frames = None
+	if func == "rainbow":
+		frames = g.generate_rainbow_frames(args['num_frames'])
+	elif func == "flow":
+		frames = g.generate_flow_frames(args['num_frames'])
+	elif func == "dot":
+		frames = g.generate_dot_frames(args['num_frames'])
+	elif func == "radiate":
+		frames = g.generate_radiate_frames(args['num_frames'])
+	elif func == "cascade":
+		frames = g.generate_cascade_frames(args['num_frames'])
+
+	if frames not None:
+		board.put(e.encode(frames), args['fps'])
+	return redirect(url_for('play'))
+
+def parse_args(args):
+	fps = DEFAULT_FPS
+	num_frames = DEFAULT_NUM_FRAMES
+	if 'fps' in args:
+		fps = int(args['fps'])
+	if 'num_frames' in args:
+		num_frames = int(args['num_frames'])
+
+	return {'fps': fps, 'num_frames': num_frames}
 
 
 if __name__ == '__main__':
