@@ -272,7 +272,7 @@ class Generator:
 			frame = [off] * self.num_lights
 			for x in range(self.width):
 				for y in range(self.height):
-					if random.randint(0, 100) < 15:
+					if random.randint(0, 100) < 2:
 						color = self.next_color_rainbow(color)
 						board[x][y] = color
 
