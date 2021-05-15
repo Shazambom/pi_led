@@ -173,11 +173,8 @@ class Generator:
 
 		board = [0] * self.num_lights
 
-		seed = bin(random.randint(0, self.num_lights))
-		print(seed)
-		for i, digit in enumerate(seed):
-			print(digit)
-			if digit == '1':
+		for i in range(self.num_lights):
+			if bool(random.getrandbits(1)):
 				board[i] = 1
 
 		neighbors = [[]] * self.num_lights
@@ -200,7 +197,7 @@ class Generator:
 					else:
 						buff[self.lookup[x][y]] = 0
 			board = copy.deepcopy(buff)
-			print(board)
+			# print(board)
 			frame = []
 			for cell in board:
 				if cell == 1:
@@ -209,7 +206,7 @@ class Generator:
 					frame.append(off)
 			color = self.next_color_rainbow(color)
 			frames.append(frame)
-			print(frame)
+			# print(frame)
 		return frames
 
 
