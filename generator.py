@@ -134,15 +134,18 @@ class Generator:
 # flow_frames = gen.generate_flow_frames(1000)
 # dot_frames = gen.generate_dot_frames(1000)
 # radiate_frames = gen.generate_radiate_frames(1000)
+# cascade_frames = gen.generate_cascade_frames(1000, 5)
 
 # flow_f = open("flow.bin", "wb")
 # dot_f = open("dot.bin", "wb")
 # radiate_f = open("radiate.bin", "wb")
+# cascade_f = open("cascade.bin", "wb")
 
 
 # flow_f.write(e.encode(flow_frames))
 # dot_f.write(e.encode(dot_frames))
 # radiate_f.write(e.encode(radiate_frames))
+# cascade_f.write(e.encode(cascade_frames))
 
 
 
