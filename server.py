@@ -103,6 +103,8 @@ def play_generated_frames(args, func):
 		frames = g.generate_game_of_life_frames(args['num_frames'])
 	elif func == "dance":
 		frames = g.generate_dance_frames(args['num_frames'])
+	elif func == "merge" or func == "quick" or func == "comb":
+		frames = g.generate_sort_frames(func)
 
 	if frames is not None:
 		board.put(e.encode(frames), args['fps'])

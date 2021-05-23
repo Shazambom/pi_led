@@ -2,6 +2,7 @@
 import colorsys
 import random
 import copy
+from sorting import Sorter
 
 
 
@@ -299,123 +300,57 @@ class Generator:
 		delta = channel - amount
 		return delta if delta > 0 else 0
 
-	def generate_merge_frames(self):
+	def generate_sort_frames(self, func):
 		frames = []
 		color = (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
 		board = []
-		start = []
+		colors = []
 
 
 
 		for x in range(self.width):
-			start.append(color)
+			colors.append(color)
 			color = self.next_color_rainbow(color)
 
 		for y in range(self.height):
-			board.append(copy.deepcopy(start))
+			board.append(list(range(0, self.width)))
 
 		for y in range(self.height):
 			random.shuffle(board[y])
 
 		##All the setup is done here now we just have to get frames for each swap
 
-	def swap(self, l, i, j):
-		l[i], l[j] = l[j], l[i]
-
-	def merge_sort(self, lst, left, right):
-		if left < right:
-			center = int((left + right - 1) / 2)
-			self.merge_sort(lst, left, center)
-			self.merge_sort(lst, center + 1, right)
-			self.merge(lst, left, center, right)
-
-	def merge(self, lst, start, mid, end):
-		start2 = mid + 1
-		if (lst[mid] <= lst[start2]):
-			return
+		frame_rows = []
+		for y in range(self.height):
+			frame_rows.append([copy.deepcopy(board[y])])
 		
-		while start <= mid and start2 <= end:
-			if lst[start] <= lst[start2]:
-				start += 1
-			else:
-				lst.insert(start, lst.pop(start2))
-				start += 1
-				mid += 1
-				start2 += 1
 
+		for y in range(self.height):
+			frame_rows[y].extend(self.sort_with_func(copy.deepcopy(board[y]), func))
 
-	def quick_sort(self, lst, left, right):
-		if left < right:
-			p = self.partition(lst, left, right)
-			self.quick_sort(lst, left, p)
-			self.quick_sort(lst, p + 1, right)
+		num_frames = max([len(row) for row in frame_rows])
 
-	def partition(self, lst, left, right):
-		pivot, ind = self.pick_pivot(lst, left, right)
-		self.swap(lst, ind, right-1)
-		i = left
-		for j in range(left, right):
-			if lst[j] < pivot:
-				self.swap(lst, i, j)
-				i += 1
-		self.swap(lst, i, right-1)
-		return i
+		for frame_ind in range(num_frames):
+			frame = [off] * self.num_lights
+			for y in range(self.height):
+				ind = frame_ind if frame_ind < len(frame_rows[y]) else len(frame_rows[y]) - 1
+				for x in range(self.width):
+					frame[self.lookup[x][y]] = colors[frame_rows[y][ind][x]]
+			frames.append(frame)
+		return frames
 
-	def pick_pivot(self, lst, left, right):
-		center = left + int((right - left) / 2)
-		avg = (lst[center] + lst[left] + lst[right-1]) / 3
-		left_delta = abs(avg - lst[left])
-		right_delta = abs(avg - lst[right-1])
-		center_delta = abs(avg - lst[center])
-		if left_delta < right_delta and left_delta < center_delta:
-			return lst[left], left
-		elif right_delta < center_delta:
-			return lst[right-1], right-1
-		else:
-			return lst[center], center
+	def sort_with_func(self, lst, func):
+		frame_row = []
+		sorter = Sorter(lambda l: frame_row.append(l))
+		if func == "merge":
+			sorter.merge_sort(lst, 0, self.width-1)
+		elif func == "quick":
+			sorter.quick_sort(lst, 0, self.width)
+		elif func == "comb":
+			sorter.comb_sort(lst)
+		return frame_row
 
-	def comb_sort(self, arr):
-		gap = len(arr)
-		shrink = 1.3
-		is_sorted = False
-		while not is_sorted:
-			gap = int(gap/shrink)
-			if gap <= 1:
-				gap = 1
-				is_sorted = True
-			for i in range(0, len(arr) - gap):
-				if arr[i] > arr[i + gap]:
-					self.swap(arr, i, i + gap)
-					is_sorted = False
-
-
-
-
-# import time
-# gen = Generator(250, 250, 5)
-# lst = random.sample(range(10000000), 1000)
-
-# merge_lst = copy.deepcopy(lst)
-# # print(merge_lst)
-# quick_lst = copy.deepcopy(lst)
-# comb_lst = copy.deepcopy(lst)
-
-# merge_time = time.process_time()
-# gen.merge_sort(merge_lst, 0, len(merge_lst) - 1)
-# print(time.process_time() - merge_time)
-# print("Is sorted? " + str(sorted(merge_lst) == merge_lst))
-# # print(merge_lst)
-
-
-# quick_time = time.process_time()
-# gen.quick_sort(quick_lst, 0, len(quick_lst))
-# print(time.process_time() - quick_time)
-# print("Is sorted? " + str(sorted(quick_lst) == quick_lst))
-
-# comb_time = time.process_time()
-# gen.comb_sort(comb_lst)
-# print(time.process_time() - comb_time)
-# print("Is sorted? " + str(sorted(comb_lst) == comb_lst))
+	
 
 #Fixed all the bugs, I'm gonna keep the example gif code here commented out because it may be useful for other experiments
 # from PIL import Image
